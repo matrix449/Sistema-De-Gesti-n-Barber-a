@@ -203,24 +203,24 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jToggleButton2" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jToggleButton6" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jToggleButton1" alignment="0" max="32767" attributes="0"/>
+                          <Component id="DashboardPanel" alignment="0" max="32767" attributes="0"/>
+                          <Component id="GestinTurnoPanel" alignment="0" max="32767" attributes="0"/>
+                          <Component id="ClientesPanel" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jPanel5" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jToggleButton3" alignment="0" min="-2" pref="228" max="-2" attributes="0"/>
-                                  <Component id="jToggleButton4" alignment="0" min="-2" pref="228" max="-2" attributes="0"/>
+                                  <Component id="EmpleadosPanel" alignment="0" min="-2" pref="228" max="-2" attributes="0"/>
+                                  <Component id="ServiciosPanel" alignment="0" min="-2" pref="228" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jToggleButton5" alignment="1" min="-2" pref="228" max="-2" attributes="0"/>
-                                  <Component id="jToggleButton7" alignment="1" min="-2" pref="228" max="-2" attributes="0"/>
-                                  <Component id="jToggleButton9" alignment="1" min="-2" pref="228" max="-2" attributes="0"/>
-                                  <Component id="jToggleButton8" alignment="1" min="-2" pref="228" max="-2" attributes="0"/>
+                                  <Component id="InventarioPanel" alignment="1" min="-2" pref="228" max="-2" attributes="0"/>
+                                  <Component id="FacturacionPanel" alignment="1" min="-2" pref="228" max="-2" attributes="0"/>
+                                  <Component id="ReportePanel" alignment="1" min="-2" pref="228" max="-2" attributes="0"/>
+                                  <Component id="ConfiguracionPanel" alignment="1" min="-2" pref="228" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -234,23 +234,23 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jToggleButton2" min="-2" pref="44" max="-2" attributes="0"/>
+                      <Component id="DashboardPanel" min="-2" pref="44" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jToggleButton6" min="-2" pref="44" max="-2" attributes="0"/>
+                      <Component id="GestinTurnoPanel" min="-2" pref="44" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jToggleButton1" min="-2" pref="44" max="-2" attributes="0"/>
+                      <Component id="ClientesPanel" min="-2" pref="44" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jToggleButton3" min="-2" pref="44" max="-2" attributes="0"/>
+                      <Component id="EmpleadosPanel" min="-2" pref="44" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jToggleButton4" min="-2" pref="44" max="-2" attributes="0"/>
+                      <Component id="ServiciosPanel" min="-2" pref="44" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jToggleButton5" min="-2" pref="44" max="-2" attributes="0"/>
+                      <Component id="InventarioPanel" min="-2" pref="44" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jToggleButton7" min="-2" pref="44" max="-2" attributes="0"/>
+                      <Component id="FacturacionPanel" min="-2" pref="44" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jToggleButton9" min="-2" pref="44" max="-2" attributes="0"/>
+                      <Component id="ReportePanel" min="-2" pref="44" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jToggleButton8" min="-2" pref="44" max="-2" attributes="0"/>
+                      <Component id="ConfiguracionPanel" min="-2" pref="44" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -288,7 +288,7 @@
                 </DimensionLayout>
               </Layout>
             </Container>
-            <Component class="javax.swing.JToggleButton" name="jToggleButton1">
+            <Component class="javax.swing.JToggleButton" name="ClientesPanel">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="33" green="33" red="33" type="rgb"/>
@@ -302,7 +302,7 @@
                 <Property name="text" type="java.lang.String" value="Clientes"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JToggleButton" name="jToggleButton2">
+            <Component class="javax.swing.JToggleButton" name="DashboardPanel">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="33" green="33" red="33" type="rgb"/>
@@ -316,7 +316,7 @@
                 <Property name="text" type="java.lang.String" value="Panel"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JToggleButton" name="jToggleButton3">
+            <Component class="javax.swing.JToggleButton" name="EmpleadosPanel">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="33" green="33" red="33" type="rgb"/>
@@ -330,7 +330,7 @@
                 <Property name="text" type="java.lang.String" value="Empleados"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JToggleButton" name="jToggleButton4">
+            <Component class="javax.swing.JToggleButton" name="ServiciosPanel">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="33" green="33" red="33" type="rgb"/>
@@ -344,7 +344,7 @@
                 <Property name="text" type="java.lang.String" value="Servicios"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JToggleButton" name="jToggleButton5">
+            <Component class="javax.swing.JToggleButton" name="InventarioPanel">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="33" green="33" red="33" type="rgb"/>
@@ -358,7 +358,7 @@
                 <Property name="text" type="java.lang.String" value="Inventario"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JToggleButton" name="jToggleButton6">
+            <Component class="javax.swing.JToggleButton" name="GestinTurnoPanel">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="33" green="33" red="33" type="rgb"/>
@@ -372,7 +372,7 @@
                 <Property name="text" type="java.lang.String" value="Gesti&#xf3;n de turnos"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JToggleButton" name="jToggleButton7">
+            <Component class="javax.swing.JToggleButton" name="FacturacionPanel">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="33" green="33" red="33" type="rgb"/>
@@ -386,7 +386,7 @@
                 <Property name="text" type="java.lang.String" value="Facturaci&#xf3;n"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JToggleButton" name="jToggleButton8">
+            <Component class="javax.swing.JToggleButton" name="ConfiguracionPanel">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="33" green="33" red="33" type="rgb"/>
@@ -400,7 +400,7 @@
                 <Property name="text" type="java.lang.String" value="Configuraci&#xf3;n"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JToggleButton" name="jToggleButton9">
+            <Component class="javax.swing.JToggleButton" name="ReportePanel">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="33" green="33" red="33" type="rgb"/>

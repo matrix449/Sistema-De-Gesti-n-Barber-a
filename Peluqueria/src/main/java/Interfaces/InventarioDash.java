@@ -17,6 +17,22 @@ public class InventarioDash extends javax.swing.JFrame {
      */
     public InventarioDash() {
         initComponents();
+        
+        this.setLocationRelativeTo(null); // Centra la ventana
+        
+        // Llamada a la utilidad de navegación con los nombres exactos de tus variables
+        NavegacionUtils.configurarMenuLateral(
+            this, 
+            DashboardPanel, 
+            GestinTurnoPanel, 
+            ClientesPanel, 
+            EmpleadosPanel, 
+            ServiciosPanel, 
+            InventarioPanel, 
+            FacturacionPanel, 
+            ReportePanel, 
+            ConfiguracionPanel
+        );
     }
 
     /**

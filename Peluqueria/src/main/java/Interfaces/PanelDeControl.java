@@ -17,6 +17,20 @@ public class PanelDeControl extends javax.swing.JFrame {
      */
     public PanelDeControl() {
         initComponents();
+        this.setLocationRelativeTo(null); // Para que la ventana inicie centrada en la pantalla
+        
+        // Llamada a la utilidad de navegación
+        NavegacionUtils.configurarMenuLateral(this, 
+            DashboardPanel, // Panel
+            GestinTurnoPanel, // Gestión de turnos
+            ClientesPanel, // Clientes
+            EmpleadosPanel, // Empleados
+            ServiciosPanel, // Servicios
+            InventarioPanel, // Inventario
+            FacturacionPanel, // Facturación
+            ReportePanel, // Reportes
+            ConfiguracionPanel  // Configuración
+        );
     }
 
     /**
@@ -38,15 +52,15 @@ public class PanelDeControl extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
-        jToggleButton1 = new javax.swing.JToggleButton();
-        jToggleButton2 = new javax.swing.JToggleButton();
-        jToggleButton3 = new javax.swing.JToggleButton();
-        jToggleButton4 = new javax.swing.JToggleButton();
-        jToggleButton5 = new javax.swing.JToggleButton();
-        jToggleButton6 = new javax.swing.JToggleButton();
-        jToggleButton7 = new javax.swing.JToggleButton();
-        jToggleButton8 = new javax.swing.JToggleButton();
-        jToggleButton9 = new javax.swing.JToggleButton();
+        ClientesPanel = new javax.swing.JToggleButton();
+        DashboardPanel = new javax.swing.JToggleButton();
+        EmpleadosPanel = new javax.swing.JToggleButton();
+        ServiciosPanel = new javax.swing.JToggleButton();
+        InventarioPanel = new javax.swing.JToggleButton();
+        GestinTurnoPanel = new javax.swing.JToggleButton();
+        FacturacionPanel = new javax.swing.JToggleButton();
+        ConfiguracionPanel = new javax.swing.JToggleButton();
+        ReportePanel = new javax.swing.JToggleButton();
         jPanel7 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jButton3 = new javax.swing.JButton();
@@ -159,50 +173,52 @@ public class PanelDeControl extends javax.swing.JFrame {
             .addGap(0, 94, Short.MAX_VALUE)
         );
 
-        jToggleButton1.setBackground(new java.awt.Color(51, 51, 51));
-        jToggleButton1.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        jToggleButton1.setForeground(new java.awt.Color(255, 153, 0));
-        jToggleButton1.setText("Clientes");
+        ClientesPanel.setBackground(new java.awt.Color(51, 51, 51));
+        ClientesPanel.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        ClientesPanel.setForeground(new java.awt.Color(255, 153, 0));
+        ClientesPanel.setText("Clientes");
 
-        jToggleButton2.setBackground(new java.awt.Color(51, 51, 51));
-        jToggleButton2.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        jToggleButton2.setForeground(new java.awt.Color(255, 153, 0));
-        jToggleButton2.setText("Panel");
+        DashboardPanel.setBackground(new java.awt.Color(51, 51, 51));
+        DashboardPanel.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        DashboardPanel.setForeground(new java.awt.Color(255, 153, 0));
+        DashboardPanel.setText("Panel");
+        DashboardPanel.addActionListener(this::DashboardPanelActionPerformed);
 
-        jToggleButton3.setBackground(new java.awt.Color(51, 51, 51));
-        jToggleButton3.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        jToggleButton3.setForeground(new java.awt.Color(255, 153, 0));
-        jToggleButton3.setText("Empleados");
+        EmpleadosPanel.setBackground(new java.awt.Color(51, 51, 51));
+        EmpleadosPanel.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        EmpleadosPanel.setForeground(new java.awt.Color(255, 153, 0));
+        EmpleadosPanel.setText("Empleados");
 
-        jToggleButton4.setBackground(new java.awt.Color(51, 51, 51));
-        jToggleButton4.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        jToggleButton4.setForeground(new java.awt.Color(255, 153, 0));
-        jToggleButton4.setText("Servicios");
+        ServiciosPanel.setBackground(new java.awt.Color(51, 51, 51));
+        ServiciosPanel.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        ServiciosPanel.setForeground(new java.awt.Color(255, 153, 0));
+        ServiciosPanel.setText("Servicios");
 
-        jToggleButton5.setBackground(new java.awt.Color(51, 51, 51));
-        jToggleButton5.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        jToggleButton5.setForeground(new java.awt.Color(255, 153, 0));
-        jToggleButton5.setText("Inventario");
+        InventarioPanel.setBackground(new java.awt.Color(51, 51, 51));
+        InventarioPanel.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        InventarioPanel.setForeground(new java.awt.Color(255, 153, 0));
+        InventarioPanel.setText("Inventario");
 
-        jToggleButton6.setBackground(new java.awt.Color(51, 51, 51));
-        jToggleButton6.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        jToggleButton6.setForeground(new java.awt.Color(255, 153, 0));
-        jToggleButton6.setText("Gestión de turnos");
+        GestinTurnoPanel.setBackground(new java.awt.Color(51, 51, 51));
+        GestinTurnoPanel.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        GestinTurnoPanel.setForeground(new java.awt.Color(255, 153, 0));
+        GestinTurnoPanel.setText("Gestión de turnos");
 
-        jToggleButton7.setBackground(new java.awt.Color(51, 51, 51));
-        jToggleButton7.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        jToggleButton7.setForeground(new java.awt.Color(255, 153, 0));
-        jToggleButton7.setText("Facturación");
+        FacturacionPanel.setBackground(new java.awt.Color(51, 51, 51));
+        FacturacionPanel.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        FacturacionPanel.setForeground(new java.awt.Color(255, 153, 0));
+        FacturacionPanel.setText("Facturación");
 
-        jToggleButton8.setBackground(new java.awt.Color(51, 51, 51));
-        jToggleButton8.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        jToggleButton8.setForeground(new java.awt.Color(255, 153, 0));
-        jToggleButton8.setText("Configuración");
+        ConfiguracionPanel.setBackground(new java.awt.Color(51, 51, 51));
+        ConfiguracionPanel.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        ConfiguracionPanel.setForeground(new java.awt.Color(255, 153, 0));
+        ConfiguracionPanel.setText("Configuración");
 
-        jToggleButton9.setBackground(new java.awt.Color(51, 51, 51));
-        jToggleButton9.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        jToggleButton9.setForeground(new java.awt.Color(255, 153, 0));
-        jToggleButton9.setText("Reportes");
+        ReportePanel.setBackground(new java.awt.Color(51, 51, 51));
+        ReportePanel.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        ReportePanel.setForeground(new java.awt.Color(255, 153, 0));
+        ReportePanel.setText("Reportes");
+        ReportePanel.addActionListener(this::ReportePanelActionPerformed);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -211,22 +227,22 @@ public class PanelDeControl extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jToggleButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToggleButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToggleButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(DashboardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(GestinTurnoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ClientesPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jToggleButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jToggleButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(EmpleadosPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ServiciosPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jToggleButton5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jToggleButton7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jToggleButton9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jToggleButton8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(InventarioPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(FacturacionPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ReportePanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ConfiguracionPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -235,23 +251,23 @@ public class PanelDeControl extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(DashboardPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToggleButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(GestinTurnoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ClientesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToggleButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(EmpleadosPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToggleButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ServiciosPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToggleButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(InventarioPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToggleButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(FacturacionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToggleButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ReportePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToggleButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ConfiguracionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(142, Short.MAX_VALUE))
         );
 
@@ -598,6 +614,14 @@ public class PanelDeControl extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void DashboardPanelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DashboardPanelActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_DashboardPanelActionPerformed
+
+    private void ReportePanelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReportePanelActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ReportePanelActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -624,6 +648,15 @@ public class PanelDeControl extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton ClientesPanel;
+    private javax.swing.JToggleButton ConfiguracionPanel;
+    private javax.swing.JToggleButton DashboardPanel;
+    private javax.swing.JToggleButton EmpleadosPanel;
+    private javax.swing.JToggleButton FacturacionPanel;
+    private javax.swing.JToggleButton GestinTurnoPanel;
+    private javax.swing.JToggleButton InventarioPanel;
+    private javax.swing.JToggleButton ReportePanel;
+    private javax.swing.JToggleButton ServiciosPanel;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -654,14 +687,5 @@ public class PanelDeControl extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JToggleButton jToggleButton1;
-    private javax.swing.JToggleButton jToggleButton2;
-    private javax.swing.JToggleButton jToggleButton3;
-    private javax.swing.JToggleButton jToggleButton4;
-    private javax.swing.JToggleButton jToggleButton5;
-    private javax.swing.JToggleButton jToggleButton6;
-    private javax.swing.JToggleButton jToggleButton7;
-    private javax.swing.JToggleButton jToggleButton8;
-    private javax.swing.JToggleButton jToggleButton9;
     // End of variables declaration//GEN-END:variables
 }
