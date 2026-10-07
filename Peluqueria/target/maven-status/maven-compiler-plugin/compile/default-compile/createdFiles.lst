@@ -15,6 +15,7 @@ Interfaces\Pruebas.class
 Interfaces\InventarioDash$1.class
 Interfaces\PanelDeControl.class
 Entity\Log.class
+Interfaces\EmpleadosDash$2.class
 Interfaces\Pruebas$1.class
 Interfaces\FacturacionDash.class
 Interfaces\InventarioNew.class
@@ -34,4 +35,5 @@ Dao\ClienteDAO.class
 Interfaces\ServiciosDash$1.class
 Test\Main$1.class
 Interfaces\InventarioDash.class
+Interfaces\CientesDash$2.class
 Service\EmpleadoService.class

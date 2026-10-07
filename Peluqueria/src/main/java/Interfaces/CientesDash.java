@@ -32,6 +32,8 @@ public CientesDash() {
             ReportePanel, 
             ConfiguracionPanel
         );
+        
+        cargarTablaClientes();
     }
 
     /**
@@ -419,12 +421,51 @@ public CientesDash() {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        // Instanciar y abrir la pantalla para crear un nuevo cliente
+        ClientesNew nuevaVentana = new ClientesNew();
+        nuevaVentana.setVisible(true);
+        nuevaVentana.setLocationRelativeTo(null);
+        
+        // Cerrar la pantalla actual
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+private void cargarTablaClientes() {
+        // 1. Agregamos la columna "Nombre y Apellido"
+        String[] titulos = {"ID Cliente", "Nombre y Apellido", "Estado", "Puntos Fidelidad", "Fecha Nacimiento", "Miembro Desde"};
+        
+        javax.swing.table.DefaultTableModel modelo = new javax.swing.table.DefaultTableModel(null, titulos) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; 
+            }
+        };
+        
+        Dao.ClienteDAO dao = new Dao.ClienteDAO();
+        java.util.List<Entity.Cliente> lista = dao.listar();
+        
+        for (Entity.Cliente c : lista) {
+            // 2. Ahora el arreglo tiene 6 posiciones
+            Object[] fila = new Object[6];
+            fila[0] = c.getIdCliente();
+            fila[1] = c.getNombre() + " " + c.getApellido(); // Juntamos los dos datos del JOIN
+            fila[2] = (c.getIdEstado() == 1) ? "Activo" : "Inactivo"; 
+            fila[3] = c.getPuntosFidelidad();
+            fila[4] = c.getFecha_de_nacimiento(); 
+            
+            if(c.getDateCreate() != null) {
+                fila[5] = c.getDateCreate().toString().substring(0, 10);
+            } else {
+                fila[5] = "-";
+            }
+            
+            modelo.addRow(fila);
+        }
+        
+        jTable1.setModel(modelo);
+    }
+    
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -460,7 +501,6 @@ public CientesDash() {
     private javax.swing.JToggleButton ReportePanel;
     private javax.swing.JToggleButton ServiciosPanel;
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -471,14 +511,12 @@ public CientesDash() {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
 }

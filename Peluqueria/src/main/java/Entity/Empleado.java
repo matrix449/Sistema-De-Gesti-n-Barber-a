@@ -9,6 +9,8 @@ import java.sql.Timestamp;
 public class Empleado {
     private int idEmpleado;
     private int idUsuario;
+    private String nombre;
+    private String apellido;
     private int idEstado;
     private String especialidad;
     private double sueldo;
@@ -22,9 +24,11 @@ public class Empleado {
     public Empleado() {
     }
 
-    public Empleado(int idEmpleado, int idUsuario, int idEstado, String especialidad, double sueldo, Timestamp deletedAt, int idUserCreated, int idUserUpdate, Timestamp dateCreate, Timestamp dateUpdate) {
+    public Empleado(int idEmpleado, int idUsuario, String nombre, String apellido, int idEstado, String especialidad, double sueldo, Timestamp deletedAt, int idUserCreated, int idUserUpdate, Timestamp dateCreate, Timestamp dateUpdate) {
         this.idEmpleado = idEmpleado;
         this.idUsuario = idUsuario;
+        this.nombre = nombre;
+        this.apellido = apellido;
         this.idEstado = idEstado;
         this.especialidad = especialidad;
         this.sueldo = sueldo;
@@ -41,6 +45,12 @@ public class Empleado {
     public int getIdUsuario() { return idUsuario; }
     public void setIdUsuario(int idUsuario) { this.idUsuario = idUsuario; }
 
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
+
+    public String getApellido() { return apellido; }
+    public void setApellido(String apellido) { this.apellido = apellido; }
+    
     public int getIdEstado() { return idEstado; }
     public void setIdEstado(int idEstado) { this.idEstado = idEstado; }
 

@@ -81,43 +81,48 @@ public class EmpleadoDAO {
         }
     }
     
-    public List<Empleado> listar() {
-        List<Empleado> lista = new ArrayList<>();
-        // Filtramos por estado 1 (activo) y limitamos a 100
-        String sql = "SELECT * FROM empleados WHERE id_estado = 1 LIMIT 100";
-        Connection con = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
+    public java.util.List<Empleado> listar() {
+        java.util.List<Empleado> lista = new java.util.ArrayList<>();
+        
+        // Consulta cruzada con INNER JOIN
+        String sql = "SELECT e.id_empleado, e.id_estado, e.especialidad, e.sueldo, e.date_create, "
+                   + "u.nombre, u.apellido "
+                   + "FROM empleados e "
+                   + "INNER JOIN usuarios u ON e.id_usuario = u.id_usuario "
+                   + "WHERE e.id_estado = 1 LIMIT 100";
+                   
+        java.sql.Connection con = null;
+        java.sql.PreparedStatement ps = null;
+        java.sql.ResultSet rs = null;
         
         try {
-            con = Conexion.getConnection();
+            con = config.Conexion.getConnection();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             
             while (rs.next()) {
                 Empleado empleado = new Empleado();
-                empleado.setIdEmpleado(rs.getInt("id_empleado")); //[cite: 3]
-                empleado.setIdUsuario(rs.getInt("id_usuario")); //[cite: 3]
-                empleado.setIdEstado(rs.getInt("id_estado")); //[cite: 3]
-                empleado.setEspecialidad(rs.getString("especialidad")); //[cite: 3]
-                empleado.setSueldo(rs.getDouble("sueldo")); //[cite: 3]
-                empleado.setDeletedAt(rs.getTimestamp("deleted_at")); //[cite: 3]
-                empleado.setIdUserCreated(rs.getInt("id_user_created")); //[cite: 3]
-                empleado.setIdUserUpdate(rs.getInt("id_user_update")); //[cite: 3]
-                empleado.setDateCreate(rs.getTimestamp("date_create")); //[cite: 3]
-                empleado.setDateUpdate(rs.getTimestamp("date_update")); //[cite: 3]
+                empleado.setIdEmpleado(rs.getInt("id_empleado")); 
+                empleado.setIdEstado(rs.getInt("id_estado")); 
+                empleado.setEspecialidad(rs.getString("especialidad")); 
+                empleado.setSueldo(rs.getDouble("sueldo")); 
+                empleado.setDateCreate(rs.getTimestamp("date_create")); 
+                
+                // Guardamos los datos traídos de la tabla usuarios
+                empleado.setNombre(rs.getString("nombre"));
+                empleado.setApellido(rs.getString("apellido"));
                 
                 lista.add(empleado);
             }
-        } catch (SQLException e) {
-            System.out.println("Error al listar empleados: " + e.getMessage());
+        } catch (java.sql.SQLException ex) {
+            System.out.println("Error al listar empleados con JOIN: " + ex.getMessage());
         } finally {
             try {
                 if (rs != null) rs.close();
                 if (ps != null) ps.close();
                 if (con != null) con.close();
-            } catch (SQLException e) {
-                System.out.println("Error al cerrar conexión: " + e.getMessage());
+            } catch (java.sql.SQLException ex) {
+                System.out.println("Error al cerrar conexión: " + ex.getMessage());
             }
         }
         return lista;

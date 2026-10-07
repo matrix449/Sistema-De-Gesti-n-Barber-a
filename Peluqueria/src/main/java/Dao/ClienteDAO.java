@@ -78,41 +78,47 @@ public class ClienteDAO {
         }
     }
     
-    public List<Cliente> listar() {
+public List<Cliente> listar() {
         List<Cliente> lista = new ArrayList<>();
-        // Filtramos por estado 1 (activo) y limitamos a 100
-        String sql = "SELECT * FROM clientes WHERE id_estado = 1 LIMIT 100";
-        Connection con = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
+        
+        // Consulta cruzada con INNER JOIN usando alias (c para clientes, u para usuarios)
+        String sql = "SELECT c.id_cliente, c.id_estado, c.puntos_fidelidad, c.fecha_de_nacimiento, c.date_create, "
+                   + "u.nombre, u.apellido "
+                   + "FROM clientes c "
+                   + "INNER JOIN usuarios u ON c.id_usuario = u.id_usuario "
+                   + "WHERE c.id_estado = 1 LIMIT 100";
+                   
+        java.sql.Connection con = null;
+        java.sql.PreparedStatement ps = null;
+        java.sql.ResultSet rs = null;
         
         try {
-            con = Conexion.getConnection();
+            con = config.Conexion.getConnection();
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             
             while (rs.next()) {
                 Cliente cliente = new Cliente();
-                cliente.setIdCliente(rs.getInt("id_cliente")); //[cite: 2]
-                cliente.setIdUsuario(rs.getInt("id_usuario")); //[cite: 2]
-                cliente.setIdEstado(rs.getInt("id_estado")); //[cite: 2]
-                cliente.setPuntosFidelidad(rs.getDouble("puntos_fidelidad")); //[cite: 2]
-                cliente.setDeletedAt(rs.getTimestamp("deleted_at")); //[cite: 2]
-                cliente.setIdUserCreated(rs.getInt("id_user_created")); //[cite: 2]
-                cliente.setIdUserUpdate(rs.getInt("id_user_update")); //[cite: 2]
-                cliente.setDateCreate(rs.getTimestamp("date_create")); //[cite: 2]
-                cliente.setDateUpdate(rs.getTimestamp("date_update")); //[cite: 2]
+                cliente.setIdCliente(rs.getInt("id_cliente")); 
+                cliente.setIdEstado(rs.getInt("id_estado")); 
+                cliente.setPuntosFidelidad(rs.getDouble("puntos_fidelidad")); 
+                cliente.setFecha_de_nacimiento(rs.getString("fecha_de_nacimiento"));
+                cliente.setDateCreate(rs.getTimestamp("date_create")); 
+                
+                // Guardamos los datos que trajimos de la tabla usuarios
+                cliente.setNombre(rs.getString("nombre"));
+                cliente.setApellido(rs.getString("apellido"));
                 
                 lista.add(cliente);
             }
-        } catch (SQLException e) {
-            System.out.println("Error al listar clientes: " + e.getMessage());
+        } catch (java.sql.SQLException e) {
+            System.out.println("Error al listar clientes con JOIN: " + e.getMessage());
         } finally {
             try {
                 if (rs != null) rs.close();
                 if (ps != null) ps.close();
                 if (con != null) con.close();
-            } catch (SQLException e) {
+            } catch (java.sql.SQLException e) {
                 System.out.println("Error al cerrar conexión: " + e.getMessage());
             }
         }

@@ -32,6 +32,8 @@ public class EmpleadosDash extends javax.swing.JFrame {
             ReportePanel, 
             ConfiguracionPanel
         );
+        
+        cargarTablaEmpleados();
     }
 
     /**
@@ -392,12 +394,48 @@ public class EmpleadosDash extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        // Instanciar y abrir la pantalla para crear un nuevo empleado
+        EmpleadosNew nuevaVentana = new EmpleadosNew();
+        nuevaVentana.setVisible(true);
+        nuevaVentana.setLocationRelativeTo(null);
+        
+        // Cerrar la pantalla actual
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void cargarTablaEmpleados() {
+        String[] titulos = {"ID Empleado", "Nombre y Apellido", "Estado", "Especialidad", "Sueldo", "Fecha de Ingreso"};
+        
+        javax.swing.table.DefaultTableModel modelo = new javax.swing.table.DefaultTableModel(null, titulos) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; 
+            }
+        };
+        
+        Dao.EmpleadoDAO dao = new Dao.EmpleadoDAO();
+        java.util.List<Entity.Empleado> lista = dao.listar();
+        
+        for (Entity.Empleado e : lista) {
+            Object[] fila = new Object[6];
+            fila[0] = e.getIdEmpleado();
+            fila[1] = e.getNombre() + " " + e.getApellido();
+            fila[2] = (e.getIdEstado() == 1) ? "Activo" : "Inactivo"; 
+            fila[3] = e.getEspecialidad();
+            fila[4] = "$" + e.getSueldo(); 
+            
+            if(e.getDateCreate() != null) {
+                fila[5] = e.getDateCreate().toString().substring(0, 10);
+            } else {
+                fila[5] = "-";
+            }
+            
+            modelo.addRow(fila);
+        }
+        
+        jTable1.setModel(modelo);
+    }
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
