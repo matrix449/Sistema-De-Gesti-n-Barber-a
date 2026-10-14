@@ -1,14 +1,18 @@
 C:\Users\chaco\Desktop\Peluqueria Java\Peluqueria\src\main\java\Config\Conexion.java
 C:\Users\chaco\Desktop\Peluqueria Java\Peluqueria\src\main\java\Dao\ClienteDAO.java
 C:\Users\chaco\Desktop\Peluqueria Java\Peluqueria\src\main\java\Dao\EmpleadoDAO.java
+C:\Users\chaco\Desktop\Peluqueria Java\Peluqueria\src\main\java\Dao\EstadoDAO.java
 C:\Users\chaco\Desktop\Peluqueria Java\Peluqueria\src\main\java\Dao\LogDAO.java
 C:\Users\chaco\Desktop\Peluqueria Java\Peluqueria\src\main\java\Entity\Cliente.java
 C:\Users\chaco\Desktop\Peluqueria Java\Peluqueria\src\main\java\Entity\Empleado.java
+C:\Users\chaco\Desktop\Peluqueria Java\Peluqueria\src\main\java\Entity\Estado.java
 C:\Users\chaco\Desktop\Peluqueria Java\Peluqueria\src\main\java\Entity\Log.java
 C:\Users\chaco\Desktop\Peluqueria Java\Peluqueria\src\main\java\Entity\Rol.java
 C:\Users\chaco\Desktop\Peluqueria Java\Peluqueria\src\main\java\Entity\Usuario.java
 C:\Users\chaco\Desktop\Peluqueria Java\Peluqueria\src\main\java\Interfaces\CientesDash.java
+C:\Users\chaco\Desktop\Peluqueria Java\Peluqueria\src\main\java\Interfaces\ClienteEdit.java
 C:\Users\chaco\Desktop\Peluqueria Java\Peluqueria\src\main\java\Interfaces\ClientesNew.java
+C:\Users\chaco\Desktop\Peluqueria Java\Peluqueria\src\main\java\Interfaces\EmpleadoEdit.java
 C:\Users\chaco\Desktop\Peluqueria Java\Peluqueria\src\main\java\Interfaces\EmpleadosDash.java
 C:\Users\chaco\Desktop\Peluqueria Java\Peluqueria\src\main\java\Interfaces\EmpleadosNew.java
 C:\Users\chaco\Desktop\Peluqueria Java\Peluqueria\src\main\java\Interfaces\FacturacionDash.java
@@ -23,6 +27,4 @@ C:\Users\chaco\Desktop\Peluqueria Java\Peluqueria\src\main\java\Interfaces\Prueb
 C:\Users\chaco\Desktop\Peluqueria Java\Peluqueria\src\main\java\Interfaces\ReportesDash.java
 C:\Users\chaco\Desktop\Peluqueria Java\Peluqueria\src\main\java\Interfaces\ServiciosDash.java
 C:\Users\chaco\Desktop\Peluqueria Java\Peluqueria\src\main\java\Interfaces\ServiciosNew.java
-C:\Users\chaco\Desktop\Peluqueria Java\Peluqueria\src\main\java\Service\ClienteService.java
-C:\Users\chaco\Desktop\Peluqueria Java\Peluqueria\src\main\java\Service\EmpleadoService.java
 C:\Users\chaco\Desktop\Peluqueria Java\Peluqueria\src\main\java\Test\Main.java

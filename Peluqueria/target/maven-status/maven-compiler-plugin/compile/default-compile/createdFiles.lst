@@ -1,15 +1,18 @@
 Entity\Cliente.class
 Interfaces\CientesDash.class
+Interfaces\ClienteEdit.class
 Entity\Empleado.class
 Interfaces\ClientesNew.class
 Interfaces\FacturacionDash$1.class
+Dao\EstadoDAO.class
 Entity\Rol.class
-Service\ClienteService.class
+Interfaces\EmpleadosDash$4.class
 Interfaces\IniciodeSecion.class
 Interfaces\ReportesDash.class
 config\Conexion.class
 Interfaces\ReportesDash$2.class
 Interfaces\ReportesDash$1.class
+Interfaces\EmpleadoEdit.class
 Interfaces\EmpleadosNew.class
 Interfaces\Pruebas.class
 Interfaces\InventarioDash$1.class
@@ -22,6 +25,7 @@ Interfaces\InventarioNew.class
 Interfaces\NavegacionUtils.class
 Interfaces\CientesDash$1.class
 Dao\LogDAO.class
+Interfaces\EmpleadosDash$3.class
 Interfaces\EmpleadosDash$1.class
 Interfaces\EmpleadosDash.class
 Interfaces\ServiciosNew.class
@@ -32,8 +36,8 @@ Test\Main.class
 Interfaces\ServiciosDash.class
 Interfaces\GestionDash.class
 Dao\ClienteDAO.class
+Entity\Estado.class
 Interfaces\ServiciosDash$1.class
 Test\Main$1.class
 Interfaces\InventarioDash.class
 Interfaces\CientesDash$2.class
-Service\EmpleadoService.class
