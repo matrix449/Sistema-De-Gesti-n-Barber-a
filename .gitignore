@@ -1,0 +1,20 @@
+# Archivos compilados
+*.class
+*.log
+
+# Carpetas de construcción de Maven
+target/
+Peluqueria/target/
+
+# Archivos comprimidos y copias de seguridad
+*.rar
+*.zip
+
+# Configuraciones de VS Code y NetBeans
+.vscode/
+nbproject/
+*.bak
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
