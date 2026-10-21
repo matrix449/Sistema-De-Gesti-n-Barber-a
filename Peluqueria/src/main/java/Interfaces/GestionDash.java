@@ -20,18 +20,17 @@ public class GestionDash extends javax.swing.JFrame {
         
         this.setLocationRelativeTo(null); // Centra la ventana
         
-        // Llamada a la utilidad de navegación con los nombres exactos de tus variables
-        NavegacionUtils.configurarMenuLateral(
-            this, 
-            DashboardPanel, 
-            GestinTurnoPanel, 
-            ClientesPanel, 
-            EmpleadosPanel, 
-            ServiciosPanel, 
-            InventarioPanel, 
-            FacturacionPanel, 
-            ReportePanel, 
-            ConfiguracionPanel
+        // Configuramos el menú lateral
+        NavegacionUtils.configurarMenuLateral(this, 
+            DashboardPanel, // Panel
+            GestinTurnoPanel, // Gestión de turnos
+            ClientesPanel, // Clientes
+            EmpleadosPanel, // Empleados
+            ServiciosPanel, // Servicios
+            InventarioPanel, // Inventario
+            FacturacionPanel, // Facturación
+            ReportePanel, //Reportes
+            PerfilPanel1 //Perfil
         );
     }
 
@@ -58,8 +57,8 @@ public class GestionDash extends javax.swing.JFrame {
         InventarioPanel = new javax.swing.JToggleButton();
         GestinTurnoPanel = new javax.swing.JToggleButton();
         FacturacionPanel = new javax.swing.JToggleButton();
-        ConfiguracionPanel = new javax.swing.JToggleButton();
         ReportePanel = new javax.swing.JToggleButton();
+        PerfilPanel1 = new javax.swing.JToggleButton();
         jPanel7 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -178,15 +177,16 @@ public class GestionDash extends javax.swing.JFrame {
         FacturacionPanel.setForeground(new java.awt.Color(255, 153, 0));
         FacturacionPanel.setText("Facturación");
 
-        ConfiguracionPanel.setBackground(new java.awt.Color(51, 51, 51));
-        ConfiguracionPanel.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        ConfiguracionPanel.setForeground(new java.awt.Color(255, 153, 0));
-        ConfiguracionPanel.setText("Configuración");
-
         ReportePanel.setBackground(new java.awt.Color(51, 51, 51));
         ReportePanel.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         ReportePanel.setForeground(new java.awt.Color(255, 153, 0));
         ReportePanel.setText("Reportes");
+
+        PerfilPanel1.setBackground(new java.awt.Color(51, 51, 51));
+        PerfilPanel1.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        PerfilPanel1.setForeground(new java.awt.Color(255, 153, 0));
+        PerfilPanel1.setText("Perfil");
+        PerfilPanel1.addActionListener(this::PerfilPanel1ActionPerformed);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -198,19 +198,19 @@ public class GestionDash extends javax.swing.JFrame {
                     .addComponent(DashboardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(GestinTurnoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(ClientesPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(EmpleadosPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ServiciosPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(InventarioPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(FacturacionPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ReportePanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ConfiguracionPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(ReportePanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(EmpleadosPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ServiciosPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(PerfilPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -235,7 +235,7 @@ public class GestionDash extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ReportePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(ConfiguracionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(PerfilPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -373,7 +373,7 @@ public class GestionDash extends javax.swing.JFrame {
                             .addComponent(SemanaTab)
                             .addComponent(DiaTab, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -418,6 +418,10 @@ public class GestionDash extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void PerfilPanel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PerfilPanel1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_PerfilPanel1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -445,7 +449,6 @@ public class GestionDash extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton ClientesPanel;
-    private javax.swing.JToggleButton ConfiguracionPanel;
     private javax.swing.JToggleButton DashboardPanel;
     private javax.swing.JButton DiaTab;
     private javax.swing.JToggleButton EmpleadosPanel;
@@ -453,6 +456,7 @@ public class GestionDash extends javax.swing.JFrame {
     private javax.swing.JToggleButton GestinTurnoPanel;
     private javax.swing.JToggleButton InventarioPanel;
     private javax.swing.JButton MesTab;
+    private javax.swing.JToggleButton PerfilPanel1;
     private javax.swing.JToggleButton ReportePanel;
     private javax.swing.JButton SemanaTab;
     private javax.swing.JToggleButton ServiciosPanel;

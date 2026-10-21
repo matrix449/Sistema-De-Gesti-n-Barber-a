@@ -17,20 +17,29 @@ public class ClientesNew extends javax.swing.JFrame {
      */
     public ClientesNew() {
         initComponents();
-                this.setLocationRelativeTo(null); // Centra la ventana
+        this.setLocationRelativeTo(null); // Centra la ventana
         
-        // Llamada a la utilidad de navegación con los nombres exactos de tus variables
-        NavegacionUtils.configurarMenuLateral(
-            this, 
-            DashboardPanel, 
-            GestinTurnoPanel, 
-            ClientesPanel, 
-            EmpleadosPanel, 
-            ServiciosPanel, 
-            InventarioPanel, 
-            FacturacionPanel, 
-            ReportePanel, 
-            ConfiguracionPanel
+        // --- NUEVO: Configuración de permisos y datos de Sesión ---
+        jLabel5.setText(Entity.Sesion.getNombreCompletoActual());
+        
+        if (Entity.Sesion.getIdRolActual() == 1) {
+            jLabel4.setText("Administrador");
+        } else {
+            jLabel4.setText("Empleado");
+            EmpleadosPanel.setVisible(false); // Ocultar el menú de empleados para el rol 2
+        }
+        
+        // Configuramos el menú lateral
+        NavegacionUtils.configurarMenuLateral(this, 
+            DashboardPanel, // Panel
+            GestinTurnoPanel, // Gestión de turnos
+            ClientesPanel, // Clientes
+            EmpleadosPanel, // Empleados
+            ServiciosPanel, // Servicios
+            InventarioPanel, // Inventario
+            FacturacionPanel, // Facturación
+            ReportePanel, //Reportes
+            PerfilPanel1 //Perfil
         );
     }
 
@@ -57,8 +66,8 @@ public class ClientesNew extends javax.swing.JFrame {
         InventarioPanel = new javax.swing.JToggleButton();
         GestinTurnoPanel = new javax.swing.JToggleButton();
         FacturacionPanel = new javax.swing.JToggleButton();
-        ConfiguracionPanel = new javax.swing.JToggleButton();
         ReportePanel = new javax.swing.JToggleButton();
+        PerfilPanel1 = new javax.swing.JToggleButton();
         jPanel7 = new javax.swing.JPanel();
         NombreClieRell1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -71,8 +80,6 @@ public class ClientesNew extends javax.swing.JFrame {
         BotonCrearClien = new javax.swing.JButton();
         ApellidoClieRell1 = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        ContraseñaRell1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -180,15 +187,16 @@ public class ClientesNew extends javax.swing.JFrame {
         FacturacionPanel.setForeground(new java.awt.Color(255, 153, 0));
         FacturacionPanel.setText("Facturación");
 
-        ConfiguracionPanel.setBackground(new java.awt.Color(51, 51, 51));
-        ConfiguracionPanel.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        ConfiguracionPanel.setForeground(new java.awt.Color(255, 153, 0));
-        ConfiguracionPanel.setText("Configuración");
-
         ReportePanel.setBackground(new java.awt.Color(51, 51, 51));
         ReportePanel.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         ReportePanel.setForeground(new java.awt.Color(255, 153, 0));
         ReportePanel.setText("Reportes");
+
+        PerfilPanel1.setBackground(new java.awt.Color(51, 51, 51));
+        PerfilPanel1.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        PerfilPanel1.setForeground(new java.awt.Color(255, 153, 0));
+        PerfilPanel1.setText("Perfil");
+        PerfilPanel1.addActionListener(this::PerfilPanel1ActionPerformed);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -200,19 +208,19 @@ public class ClientesNew extends javax.swing.JFrame {
                     .addComponent(DashboardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(GestinTurnoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(ClientesPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(EmpleadosPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ServiciosPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(InventarioPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(FacturacionPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ReportePanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ConfiguracionPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(ReportePanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(EmpleadosPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ServiciosPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(PerfilPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -237,7 +245,7 @@ public class ClientesNew extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ReportePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(ConfiguracionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(PerfilPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -275,12 +283,6 @@ public class ClientesNew extends javax.swing.JFrame {
         jLabel8.setForeground(new java.awt.Color(255, 153, 0));
         jLabel8.setText("Apellido del Cliente:");
 
-        jLabel9.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 153, 0));
-        jLabel9.setText("Contraseña:");
-
-        ContraseñaRell1.setMinimumSize(new java.awt.Dimension(13, 36));
-
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
@@ -307,7 +309,7 @@ public class ClientesNew extends javax.swing.JFrame {
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(ApellidoClieRell1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 227, Short.MAX_VALUE)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                                 .addComponent(jLabel6)
@@ -316,11 +318,7 @@ public class ClientesNew extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(EmailClieRell1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(ContraseñaRell1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(EmailClieRell1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(50, 50, 50))
         );
         jPanel7Layout.setVerticalGroup(
@@ -339,11 +337,7 @@ public class ClientesNew extends javax.swing.JFrame {
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(EmailClieRell1, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
                             .addComponent(jLabel7))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel9)
-                            .addComponent(ContraseñaRell1, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE))
-                        .addGap(320, 320, 320))
+                        .addGap(358, 358, 358))
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(ApellidoClieRell1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -400,16 +394,19 @@ public class ClientesNew extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BotonCrearClienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonCrearClienActionPerformed
-            // 1. Obtener textos (Cambia los nombres según como estén en tu NetBeans)
-        String nombre = NombreClieRell1.getText(); 
-        String apellido = ApellidoClieRell1.getText(); 
-        String telefono = TelefonoClieRell1.getText(); 
-        String email = EmailClieRell1.getText(); 
-        String fechaNac = FechaNacClieRell1.getText(); 
-        String password = ContraseñaRell1.getText(); 
+        // 1. Obtener textos y limpiar espacios en blanco con trim()
+        String nombre = NombreClieRell1.getText().trim(); 
+        String apellido = ApellidoClieRell1.getText().trim(); 
+        String telefono = TelefonoClieRell1.getText().trim(); 
+        String email = EmailClieRell1.getText().trim(); 
+        String fechaNac = FechaNacClieRell1.getText().trim(); 
 
-        if (nombre.isEmpty() || apellido.isEmpty() || password.isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, complete al menos Nombre, Apellido y Contraseña.");
+        // Eliminamos "y Contraseña" de la validación
+        if (nombre.isEmpty() || apellido.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "Por favor, complete al menos Nombre y Apellido.", 
+                "Campos obligatorios", 
+                javax.swing.JOptionPane.WARNING_MESSAGE);
             return; 
         }
 
@@ -420,16 +417,12 @@ public class ClientesNew extends javax.swing.JFrame {
         nuevoUsuario.setApellido(apellido);
         nuevoUsuario.setTelefono(telefono);
         nuevoUsuario.setEmail(email);
-        nuevoUsuario.setPassword(password);
-        
-        int idAdminEnSesion = 1; // Dejamos el admin 1 por ahora
-        nuevoUsuario.setIdUserCreated(idAdminEnSesion); 
+        nuevoUsuario.setPassword("1234");
 
-        // 3. Objeto Cliente
+        // 3. Objeto Cliente (Ya no hace falta setear el idUserCreated aquí porque el DAO usa la Sesión)
         Entity.Cliente nuevoCliente = new Entity.Cliente();
         nuevoCliente.setPuntosFidelidad(0.0); 
         nuevoCliente.setFecha_de_nacimiento(fechaNac);
-        nuevoCliente.setIdUserCreated(idAdminEnSesion);
 
         // 4. Llamamos DIRECTO al DAO
         Dao.ClienteDAO dao = new Dao.ClienteDAO();
@@ -441,9 +434,16 @@ public class ClientesNew extends javax.swing.JFrame {
             dash.setVisible(true);
             this.dispose(); 
         } else {
-            javax.swing.JOptionPane.showMessageDialog(this, "Error al guardar en la base de datos.");
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "Error al guardar en la base de datos.", 
+                "Error", 
+                javax.swing.JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_BotonCrearClienActionPerformed
+
+    private void PerfilPanel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PerfilPanel1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_PerfilPanel1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -474,8 +474,6 @@ public class ClientesNew extends javax.swing.JFrame {
     private javax.swing.JTextField ApellidoClieRell1;
     private javax.swing.JButton BotonCrearClien;
     private javax.swing.JToggleButton ClientesPanel;
-    private javax.swing.JToggleButton ConfiguracionPanel;
-    private javax.swing.JTextField ContraseñaRell1;
     private javax.swing.JToggleButton DashboardPanel;
     private javax.swing.JTextField EmailClieRell1;
     private javax.swing.JToggleButton EmpleadosPanel;
@@ -484,6 +482,7 @@ public class ClientesNew extends javax.swing.JFrame {
     private javax.swing.JToggleButton GestinTurnoPanel;
     private javax.swing.JToggleButton InventarioPanel;
     private javax.swing.JTextField NombreClieRell1;
+    private javax.swing.JToggleButton PerfilPanel1;
     private javax.swing.JToggleButton ReportePanel;
     private javax.swing.JToggleButton ServiciosPanel;
     private javax.swing.JTextField TelefonoClieRell1;
@@ -495,7 +494,6 @@ public class ClientesNew extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;

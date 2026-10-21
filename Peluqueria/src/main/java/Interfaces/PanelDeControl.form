@@ -242,22 +242,22 @@
                           <Component id="DashboardPanel" alignment="0" max="32767" attributes="0"/>
                           <Component id="GestinTurnoPanel" alignment="0" max="32767" attributes="0"/>
                           <Component id="ClientesPanel" alignment="0" max="32767" attributes="0"/>
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
-                                  <Component id="EmpleadosPanel" alignment="0" min="-2" pref="228" max="-2" attributes="0"/>
-                                  <Component id="ServiciosPanel" alignment="0" min="-2" pref="228" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          </Group>
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="InventarioPanel" alignment="1" min="-2" pref="228" max="-2" attributes="0"/>
                                   <Component id="FacturacionPanel" alignment="1" min="-2" pref="228" max="-2" attributes="0"/>
                                   <Component id="ReportePanel" alignment="1" min="-2" pref="228" max="-2" attributes="0"/>
-                                  <Component id="ConfiguracionPanel" alignment="1" min="-2" pref="228" max="-2" attributes="0"/>
                               </Group>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
+                                  <Component id="EmpleadosPanel" alignment="0" min="-2" pref="228" max="-2" attributes="0"/>
+                                  <Component id="ServiciosPanel" alignment="0" min="-2" pref="228" max="-2" attributes="0"/>
+                                  <Component id="PerfilPanel1" alignment="0" min="-2" pref="228" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -286,7 +286,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="ReportePanel" min="-2" pref="44" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="ConfiguracionPanel" min="-2" pref="44" max="-2" attributes="0"/>
+                      <Component id="PerfilPanel1" min="-2" pref="44" max="-2" attributes="0"/>
                       <EmptySpace pref="174" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -425,20 +425,6 @@
                 <Property name="text" type="java.lang.String" value="Facturaci&#xf3;n"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JToggleButton" name="ConfiguracionPanel">
-              <Properties>
-                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="33" green="33" red="33" type="rgb"/>
-                </Property>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="sansserif" size="14" style="0"/>
-                </Property>
-                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="0" green="99" red="ff" type="rgb"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Configuraci&#xf3;n"/>
-              </Properties>
-            </Component>
             <Component class="javax.swing.JToggleButton" name="ReportePanel">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -454,6 +440,23 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ReportePanelActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JToggleButton" name="PerfilPanel1">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="33" green="33" red="33" type="rgb"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="sansserif" size="14" style="0"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="0" green="99" red="ff" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Perfil"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="PerfilPanel1ActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>

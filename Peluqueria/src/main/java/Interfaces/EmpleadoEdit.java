@@ -6,20 +6,36 @@ public class EmpleadoEdit extends javax.swing.JFrame {
     
     private int idEmpleadoSeleccionado;
     private int idUsuarioRelacionado;
+    private String passwordActual;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(EmpleadoEdit.class.getName());
 
 
     // --- 1. CONSTRUCTOR MODIFICADO ---
     public EmpleadoEdit(int idEmpleado) {
-        initComponents();
+    initComponents();
         this.setLocationRelativeTo(null); // Centra la ventana
         
+        // --- NUEVO: Configuración de permisos y datos de Sesión ---
+        jLabel5.setText(Entity.Sesion.getNombreCompletoActual());
+        if (Entity.Sesion.getIdRolActual() == 1) {
+            jLabel4.setText("Administrador");
+        } else {
+            jLabel4.setText("Empleado");
+            EmpleadosPanel.setVisible(false); // Ocultar el menú de empleados por seguridad
+        }
+
         // Configuramos el menú lateral
-        NavegacionUtils.configurarMenuLateral(
-            this, DashboardPanel, GestinTurnoPanel, ClientesPanel, 
-            EmpleadosPanel, ServiciosPanel, InventarioPanel, 
-            FacturacionPanel, ReportePanel, ConfiguracionPanel
+        NavegacionUtils.configurarMenuLateral(this, 
+            DashboardPanel, // Panel
+            GestinTurnoPanel, // Gestión de turnos
+            ClientesPanel, // Clientes
+            EmpleadosPanel, // Empleados
+            ServiciosPanel, // Servicios
+            InventarioPanel, // Inventario
+            FacturacionPanel, // Facturación
+            ReportePanel, //Reportes
+            PerfilPanel1 //Perfil
         );
 
         // Guardamos el ID y cargamos los datos
@@ -36,17 +52,18 @@ public class EmpleadoEdit extends javax.swing.JFrame {
             Entity.Empleado empleado = (Entity.Empleado) datos[0];
             Entity.Usuario usuario = (Entity.Usuario) datos[1];
             
-            this.idUsuarioRelacionado = empleado.getIdUsuario(); // Guardamos el ID del usuario
+            this.idUsuarioRelacionado = empleado.getIdUsuario(); 
+            // ¡MAGIA! Guardamos la contraseña en segundo plano
+            this.passwordActual = usuario.getPassword(); 
             
             // Rellenamos los campos visuales
             NombreEmpleRell.setText(usuario.getNombre());
             ApellidoEmpleRell.setText(usuario.getApellido());
             TelefoRell.setText(usuario.getTelefono());
             EmailRell.setText(usuario.getEmail());
-            ContraseñaRell.setText(usuario.getPassword());
+            // (Ya no rellenamos ContraseñaRell porque lo eliminamos visualmente)
             EspecialidadRell.setText(empleado.getEspecialidad());
             SueldoRell.setText(String.valueOf(empleado.getSueldo()));
-            
             
         } else {
             javax.swing.JOptionPane.showMessageDialog(this, "Error al cargar los datos del empleado.");
@@ -71,8 +88,8 @@ public class EmpleadoEdit extends javax.swing.JFrame {
         InventarioPanel = new javax.swing.JToggleButton();
         GestinTurnoPanel = new javax.swing.JToggleButton();
         FacturacionPanel = new javax.swing.JToggleButton();
-        ConfiguracionPanel = new javax.swing.JToggleButton();
         ReportePanel = new javax.swing.JToggleButton();
+        PerfilPanel1 = new javax.swing.JToggleButton();
         jPanel7 = new javax.swing.JPanel();
         NombreEmpleRell = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -83,8 +100,6 @@ public class EmpleadoEdit extends javax.swing.JFrame {
         BotonCrearEmpleado = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         ApellidoEmpleRell = new javax.swing.JTextField();
-        ContraseñaRell = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         EmailRell = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
@@ -196,15 +211,16 @@ public class EmpleadoEdit extends javax.swing.JFrame {
         FacturacionPanel.setForeground(new java.awt.Color(255, 153, 0));
         FacturacionPanel.setText("Facturación");
 
-        ConfiguracionPanel.setBackground(new java.awt.Color(51, 51, 51));
-        ConfiguracionPanel.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        ConfiguracionPanel.setForeground(new java.awt.Color(255, 153, 0));
-        ConfiguracionPanel.setText("Configuración");
-
         ReportePanel.setBackground(new java.awt.Color(51, 51, 51));
         ReportePanel.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         ReportePanel.setForeground(new java.awt.Color(255, 153, 0));
         ReportePanel.setText("Reportes");
+
+        PerfilPanel1.setBackground(new java.awt.Color(51, 51, 51));
+        PerfilPanel1.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        PerfilPanel1.setForeground(new java.awt.Color(255, 153, 0));
+        PerfilPanel1.setText("Perfil");
+        PerfilPanel1.addActionListener(this::PerfilPanel1ActionPerformed);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -228,7 +244,7 @@ public class EmpleadoEdit extends javax.swing.JFrame {
                             .addComponent(InventarioPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(FacturacionPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(ReportePanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ConfiguracionPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(PerfilPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -253,7 +269,7 @@ public class EmpleadoEdit extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ReportePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(ConfiguracionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(PerfilPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(174, Short.MAX_VALUE))
         );
 
@@ -287,12 +303,6 @@ public class EmpleadoEdit extends javax.swing.JFrame {
         jLabel8.setForeground(new java.awt.Color(255, 153, 0));
         jLabel8.setText("Apellido:");
 
-        ContraseñaRell.setMinimumSize(new java.awt.Dimension(13, 36));
-
-        jLabel9.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 153, 0));
-        jLabel9.setText("Contraseña:");
-
         jLabel10.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 153, 0));
         jLabel10.setText("Email:");
@@ -302,6 +312,7 @@ public class EmpleadoEdit extends javax.swing.JFrame {
         jLabel11.setText("Sueldo:");
 
         SueldoRell.setMinimumSize(new java.awt.Dimension(13, 36));
+        SueldoRell.addActionListener(this::SueldoRellActionPerformed);
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -322,7 +333,7 @@ public class EmpleadoEdit extends javax.swing.JFrame {
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ApellidoEmpleRell, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 239, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 261, Short.MAX_VALUE)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -333,13 +344,9 @@ public class EmpleadoEdit extends javax.swing.JFrame {
                             .addComponent(TelefoRell, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(EmailRell, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel11)
-                            .addComponent(jLabel9))
+                        .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(ContraseñaRell, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(SueldoRell, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(SueldoRell, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(50, 50, 50))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -373,15 +380,11 @@ public class EmpleadoEdit extends javax.swing.JFrame {
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel10)
                             .addComponent(EmailRell, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(ContraseñaRell, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel9))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel11)
                             .addComponent(SueldoRell, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 385, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(BotonCrearEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(14, 14, 14))))
         );
@@ -429,22 +432,22 @@ public class EmpleadoEdit extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BotonCrearEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonCrearEmpleadoActionPerformed
-        String nombre = NombreEmpleRell.getText();
-        String apellido = ApellidoEmpleRell.getText();
-        String telefono = TelefoRell.getText();
-        String email = EmailRell.getText();
-        String password = ContraseñaRell.getText();
-        String especialidad = EspecialidadRell.getText();
-        String sueldoStr = SueldoRell.getText();
+        String nombre = NombreEmpleRell.getText().trim();
+        String apellido = ApellidoEmpleRell.getText().trim();
+        String telefono = TelefoRell.getText().trim();
+        String email = EmailRell.getText().trim();
+        String especialidad = EspecialidadRell.getText().trim();
+        String sueldoStr = SueldoRell.getText().trim();
 
-        if (nombre.isEmpty() || apellido.isEmpty() || password.isEmpty() || sueldoStr.isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, complete al menos Nombre, Apellido, Contraseña y Sueldo.");
+        // Eliminamos la validación de la contraseña
+        if (nombre.isEmpty() || apellido.isEmpty() || email.isEmpty() || sueldoStr.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, complete al menos Nombre, Apellido, Email y Sueldo.");
             return;
         }
         
         double sueldo;
         try {
-            sueldo = Double.parseDouble(sueldoStr); // Convertimos el texto del sueldo a número decimal
+            sueldo = Double.parseDouble(sueldoStr); 
         } catch (NumberFormatException e) {
             javax.swing.JOptionPane.showMessageDialog(this, "El sueldo debe ser un número válido (ej: 45000.50).");
             return;
@@ -456,7 +459,8 @@ public class EmpleadoEdit extends javax.swing.JFrame {
         u.setApellido(apellido);
         u.setTelefono(telefono);
         u.setEmail(email);
-        u.setPassword(password);
+        // Le devolvemos su contraseña original para que el DAO no la borre
+        u.setPassword(this.passwordActual); 
 
         // Armamos el Empleado
         Entity.Empleado e = new Entity.Empleado();
@@ -477,6 +481,14 @@ public class EmpleadoEdit extends javax.swing.JFrame {
             javax.swing.JOptionPane.showMessageDialog(this, "Error al modificar en la base de datos.");
         }
     }//GEN-LAST:event_BotonCrearEmpleadoActionPerformed
+
+    private void SueldoRellActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SueldoRellActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SueldoRellActionPerformed
+
+    private void PerfilPanel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PerfilPanel1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_PerfilPanel1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -507,8 +519,6 @@ public class EmpleadoEdit extends javax.swing.JFrame {
     private javax.swing.JTextField ApellidoEmpleRell;
     private javax.swing.JButton BotonCrearEmpleado;
     private javax.swing.JToggleButton ClientesPanel;
-    private javax.swing.JToggleButton ConfiguracionPanel;
-    private javax.swing.JTextField ContraseñaRell;
     private javax.swing.JToggleButton DashboardPanel;
     private javax.swing.JTextField EmailRell;
     private javax.swing.JToggleButton EmpleadosPanel;
@@ -517,6 +527,7 @@ public class EmpleadoEdit extends javax.swing.JFrame {
     private javax.swing.JToggleButton GestinTurnoPanel;
     private javax.swing.JToggleButton InventarioPanel;
     private javax.swing.JTextField NombreEmpleRell;
+    private javax.swing.JToggleButton PerfilPanel1;
     private javax.swing.JToggleButton ReportePanel;
     private javax.swing.JToggleButton ServiciosPanel;
     private javax.swing.JTextField SueldoRell;
@@ -530,7 +541,6 @@ public class EmpleadoEdit extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;

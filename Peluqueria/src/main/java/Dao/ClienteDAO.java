@@ -3,6 +3,7 @@ package Dao;
 import config.Conexion;
 import Entity.Cliente;
 import Entity.Usuario;
+import Entity.Sesion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,8 +17,8 @@ public class ClienteDAO {
 
     // --- 1. CREAR CLIENTE (Y SU USUARIO) ---
     public boolean crear(Usuario usuario, Cliente cliente) {
-        String sqlUsuario = "INSERT INTO usuarios (id_rol, id_estado, nombre, apellido, telefono, email, password, id_user_created, date_create) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        String sqlCliente = "INSERT INTO clientes (id_usuario, id_estado, puntos_fidelidad, fecha_de_nacimiento, id_user_created, date_create) VALUES (?, ?, ?, ?, ?, ?)";
+        String sqlUsuario = "INSERT INTO usuarios (id_rol, id_estado, nombre, apellido, telefono, email, password, id_user_create, date_create) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sqlCliente = "INSERT INTO clientes (id_usuario, id_estado, puntos_fidelidad, fecha_de_nacimiento, id_user_create, date_create) VALUES (?, ?, ?, ?, ?, ?)";
         
         Connection con = null;
         PreparedStatement psUsuario = null;
@@ -38,7 +39,7 @@ public class ClienteDAO {
             psUsuario.setString(5, usuario.getTelefono());
             psUsuario.setString(6, usuario.getEmail());
             psUsuario.setString(7, usuario.getPassword());
-            psUsuario.setInt(8, 4);
+            psUsuario.setInt(8, Sesion.getIdUsuarioActual());
             psUsuario.setTimestamp(9, new Timestamp(System.currentTimeMillis()));
             
             int filasUsuario = psUsuario.executeUpdate();
@@ -54,7 +55,7 @@ public class ClienteDAO {
                     psCliente.setInt(2, 1);
                     psCliente.setDouble(3, cliente.getPuntosFidelidad());
                     psCliente.setString(4, cliente.getFecha_de_nacimiento());
-                    psCliente.setInt(5, 4);
+                    psCliente.setInt(5, Sesion.getIdUsuarioActual());
                     psCliente.setTimestamp(6, new Timestamp(System.currentTimeMillis()));
                     
                     int filasCliente = psCliente.executeUpdate();
@@ -147,7 +148,7 @@ public class ClienteDAO {
             psUsuario.setString(3, usuario.getTelefono());
             psUsuario.setString(4, usuario.getEmail());
             psUsuario.setString(5, usuario.getPassword());
-            psUsuario.setInt(6, 4);
+            psUsuario.setInt(6, Sesion.getIdUsuarioActual());
             psUsuario.setTimestamp(7, fechaActual); // Fecha actual
             psUsuario.setInt(8, cliente.getIdUsuario());
             
@@ -156,7 +157,7 @@ public class ClienteDAO {
             // 2. Modificamos al cliente
             psCliente = con.prepareStatement(sqlCliente);
             psCliente.setString(1, cliente.getFecha_de_nacimiento());
-            psCliente.setInt(2, 4);
+            psCliente.setInt(2, Sesion.getIdUsuarioActual());
             psCliente.setTimestamp(3, fechaActual); // Fecha actual
             psCliente.setInt(4, cliente.getIdCliente());
             
@@ -179,9 +180,9 @@ public class ClienteDAO {
     }
 
     // --- 4. ELIMINAR CLIENTE ---
-    public boolean eliminarLogico(int idCliente, int idAdminEnSesion) {
-        String sqlBaja = "UPDATE clientes SET id_estado = 0, deleted_at = ?, id_user_update = ? WHERE id_cliente = ?";
-        String sqlLog = "INSERT INTO logs (id_usuario, tabla_afectada, accion, descripcion, fecha_log, id_user_created, date_create) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    public boolean eliminarLogico(int idCliente) {
+        String sqlBaja = "UPDATE clientes SET id_estado = 3, deleted_at = ?, id_user_update = ? WHERE id_cliente = ?";
+        String sqlLog = "INSERT INTO logs (id_usuario, tabla_afectada, accion, descripcion, fecha_log, id_user_create, date_create) VALUES (?, ?, ?, ?, ?, ?, ?)";
         
         Connection con = null;
         PreparedStatement psBaja = null;
@@ -196,7 +197,7 @@ public class ClienteDAO {
             psBaja = con.prepareStatement(sqlBaja);
             Timestamp fechaActual = new Timestamp(System.currentTimeMillis());
             psBaja.setTimestamp(1, fechaActual);
-            psBaja.setInt(2, 4);
+            psBaja.setInt(2, Sesion.getIdUsuarioActual());
             psBaja.setInt(3, idCliente);
             
             if (psBaja.executeUpdate() > 0) {
@@ -207,7 +208,7 @@ public class ClienteDAO {
                 psLog.setString(3, "ELIMINAR");
                 psLog.setString(4, "Se dio de baja lógicamente al cliente ID: " + idCliente);
                 psLog.setTimestamp(5, fechaActual);
-                psLog.setInt(6, 4);
+                psLog.setInt(6, Sesion.getIdUsuarioActual());
                 psLog.setTimestamp(7, fechaActual);
                 
                 if (psLog.executeUpdate() > 0) {
@@ -228,7 +229,6 @@ public class ClienteDAO {
     }
 
     // --- 5. LISTAR CLIENTES ---
-// --- NUEVO: LISTAR CLIENTES FILTRADOS ---
     public List<Cliente> listarFiltrado(String textoBusqueda, int idEstado) {
         List<Cliente> lista = new ArrayList<>();
         

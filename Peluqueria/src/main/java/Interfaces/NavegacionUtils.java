@@ -15,7 +15,7 @@ public class NavegacionUtils {
             JToggleButton inventarioPanel,
             JToggleButton facturacionPanel,
             JToggleButton reportePanel,
-            JToggleButton configuracionPanel) {
+            JToggleButton perfilPanel1) {
 
         dashboardPanel.addActionListener(e -> cambiarVentana(ventanaActual, new PanelDeControl()));
         gestinTurnoPanel.addActionListener(e -> cambiarVentana(ventanaActual, new GestionDash()));
@@ -25,7 +25,8 @@ public class NavegacionUtils {
         inventarioPanel.addActionListener(e -> cambiarVentana(ventanaActual, new InventarioDash()));
         facturacionPanel.addActionListener(e -> cambiarVentana(ventanaActual, new FacturacionDash()));
         reportePanel.addActionListener(e -> cambiarVentana(ventanaActual, new ReportesDash()));
-        configuracionPanel.addActionListener(e -> cambiarVentana(ventanaActual, new PanelDeControl()));
+        perfilPanel1.addActionListener(e -> cambiarVentana(ventanaActual, new PerfilUsuario()));
+        
     }
 
     private static void cambiarVentana(JFrame actual, JFrame nueva) {

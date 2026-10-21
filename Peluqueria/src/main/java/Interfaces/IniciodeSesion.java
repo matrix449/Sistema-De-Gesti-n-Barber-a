@@ -1,22 +1,20 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package Interfaces;
 
-/**
- *
- * @author chaco
- */
-public class IniciodeSecion extends javax.swing.JFrame {
+import Entity.Sesion;
+import Dao.UsuarioDAO;
+import Entity.Usuario;
+
+public class IniciodeSesion extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(IniciodeSecion.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(IniciodeSesion.class.getName());
 
     /**
      * Creates new form IniciodeSecion
      */
-    public IniciodeSecion() {
+    public IniciodeSesion() {
         initComponents();
+        this.setLocationRelativeTo(null); // Centra la ventana de login
     }
 
     /**
@@ -64,7 +62,7 @@ public class IniciodeSecion extends javax.swing.JFrame {
         Text3.setForeground(new java.awt.Color(255, 153, 51));
         Text3.setText("Caco");
 
-        jPasswordField1.setText("jPasswordField1");
+        jPasswordField1.addActionListener(this::jPasswordField1ActionPerformed);
 
         jScrollPane2.setViewportView(jTextPane1);
 
@@ -184,8 +182,58 @@ public class IniciodeSecion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BotonIngresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonIngresaActionPerformed
-        // TODO add your handling code here:
+// 1. Capturamos los datos ingresados
+        String email = jTextPane1.getText().trim();
+        String password = new String(jPasswordField1.getPassword());
+
+        // 2. Validamos que no hayan dejado los campos vacíos
+        if (email.isEmpty() || password.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "Por favor, ingrese su correo y contraseña.", 
+                "Campos incompletos", 
+                javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // 3. Consultamos a la base de datos a través del DAO
+        UsuarioDAO dao = new UsuarioDAO();
+        Usuario usu = dao.autenticar(email, password);
+
+        // 4. Verificamos el resultado y el ROL
+        if (usu != null) {
+            // Verificamos si tiene permisos de acceso (1 = Admin, 2 = Empleado)
+            if (usu.getIdRol() == 1 || usu.getIdRol() == 2) {
+                // ¡LOGIN EXITOSO PARA PERSONAL! Guardamos los datos en la sesión global
+                Sesion.iniciarSesion(usu.getIdUsuario(), usu.getIdRol(), usu.getNombre(), usu.getApellido());
+            
+                // Abrimos el Panel de Control
+                PanelDeControl panel = new PanelDeControl();
+                panel.setVisible(true);
+            
+                // Cerramos la ventana de Login
+                this.dispose();
+            } else {
+                // El usuario existe, pero es un Cliente (rol distinto a 1 o 2)
+                javax.swing.JOptionPane.showMessageDialog(this, 
+                    "Acceso denegado. Este sistema es exclusivo para el personal de la barbería.", 
+                    "Sin permisos", 
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+                // Opcional: Limpiar la contraseña
+                jPasswordField1.setText("");
+            }
+        } else {
+            // Credenciales incorrectas o usuario inexistente
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "Correo o contraseña incorrectos. Intente nuevamente.", 
+                "Error de acceso", 
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+            jPasswordField1.setText("");
+        }
     }//GEN-LAST:event_BotonIngresaActionPerformed
+
+    private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPasswordField1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -209,7 +257,7 @@ public class IniciodeSecion extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new IniciodeSecion().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new IniciodeSesion().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -14,10 +14,17 @@ public CientesDash() {
         initComponents();
         this.setLocationRelativeTo(null); // Centra la ventana
         
-        NavegacionUtils.configurarMenuLateral(
-            this, DashboardPanel, GestinTurnoPanel, ClientesPanel, 
-            EmpleadosPanel, ServiciosPanel, InventarioPanel, 
-            FacturacionPanel, ReportePanel, ConfiguracionPanel
+        // Configuramos el menú lateral
+        NavegacionUtils.configurarMenuLateral(this, 
+            DashboardPanel, // Panel
+            GestinTurnoPanel, // Gestión de turnos
+            ClientesPanel, // Clientes
+            EmpleadosPanel, // Empleados
+            ServiciosPanel, // Servicios
+            InventarioPanel, // Inventario
+            FacturacionPanel, // Facturación
+            ReportePanel, //Reportes
+            PerfilPanel1 //Perfil
         );
         
         cargarListaEstados(); // <--- ¡TE FALTABA ESTA LÍNEA!
@@ -46,8 +53,8 @@ public CientesDash() {
         InventarioPanel = new javax.swing.JToggleButton();
         GestinTurnoPanel = new javax.swing.JToggleButton();
         FacturacionPanel = new javax.swing.JToggleButton();
-        ConfiguracionPanel = new javax.swing.JToggleButton();
         ReportePanel = new javax.swing.JToggleButton();
+        PerfilPanel1 = new javax.swing.JToggleButton();
         jPanel7 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -192,15 +199,16 @@ public CientesDash() {
         FacturacionPanel.setForeground(new java.awt.Color(255, 153, 0));
         FacturacionPanel.setText("Facturación");
 
-        ConfiguracionPanel.setBackground(new java.awt.Color(51, 51, 51));
-        ConfiguracionPanel.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        ConfiguracionPanel.setForeground(new java.awt.Color(255, 153, 0));
-        ConfiguracionPanel.setText("Configuración");
-
         ReportePanel.setBackground(new java.awt.Color(51, 51, 51));
         ReportePanel.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         ReportePanel.setForeground(new java.awt.Color(255, 153, 0));
         ReportePanel.setText("Reportes");
+
+        PerfilPanel1.setBackground(new java.awt.Color(51, 51, 51));
+        PerfilPanel1.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        PerfilPanel1.setForeground(new java.awt.Color(255, 153, 0));
+        PerfilPanel1.setText("Perfil");
+        PerfilPanel1.addActionListener(this::PerfilPanel1ActionPerformed);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -224,7 +232,7 @@ public CientesDash() {
                             .addComponent(InventarioPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(FacturacionPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(ReportePanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ConfiguracionPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(PerfilPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -249,7 +257,7 @@ public CientesDash() {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ReportePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(ConfiguracionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(PerfilPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -451,9 +459,9 @@ public CientesDash() {
         // 4. Si dice que SÍ (YES_OPTION), lo borramos
         if (confirmacion == javax.swing.JOptionPane.YES_OPTION) {
             Dao.ClienteDAO dao = new Dao.ClienteDAO();
-            int idAdminEnSesion = 1; // Simulamos tu admin
             
-            if (dao.eliminarLogico(idCliente, idAdminEnSesion)) {
+            // --- CORRECCIÓN AQUÍ: Borramos el int idAdminEnSesion = 1 y pasamos solo el idCliente ---
+            if (dao.eliminarLogico(idCliente)) {
                 javax.swing.JOptionPane.showMessageDialog(this, "Cliente eliminado correctamente.");
                 cargarTablaClientes(); // Recargamos la tabla para que desaparezca automáticamente
             } else {
@@ -488,6 +496,10 @@ public CientesDash() {
             cargarTablaClientes();
         }
     }//GEN-LAST:event_ListaEstadoValueChanged
+
+    private void PerfilPanel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PerfilPanel1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_PerfilPanel1ActionPerformed
 
     private void cargarListaEstados() {
         Dao.EstadoDAO estadoDao = new Dao.EstadoDAO();
@@ -567,7 +579,6 @@ public CientesDash() {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton ClientesPanel;
-    private javax.swing.JToggleButton ConfiguracionPanel;
     private javax.swing.JToggleButton DashboardPanel;
     private javax.swing.JButton EliminarCliente;
     private javax.swing.JToggleButton EmpleadosPanel;
@@ -575,6 +586,7 @@ public CientesDash() {
     private javax.swing.JToggleButton GestinTurnoPanel;
     private javax.swing.JToggleButton InventarioPanel;
     private javax.swing.JList<Entity.Estado> ListaEstado;
+    private javax.swing.JToggleButton PerfilPanel1;
     private javax.swing.JToggleButton ReportePanel;
     private javax.swing.JToggleButton ServiciosPanel;
     private javax.swing.JButton jButton1;

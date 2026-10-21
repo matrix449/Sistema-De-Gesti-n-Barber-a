@@ -3,6 +3,7 @@ package Dao;
 import config.Conexion;
 import Entity.Empleado;
 import Entity.Usuario;
+import Entity.Sesion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -38,7 +39,7 @@ public class EmpleadoDAO {
             psUsuario.setString(5, usuario.getTelefono());
             psUsuario.setString(6, usuario.getEmail());
             psUsuario.setString(7, usuario.getPassword());
-            psUsuario.setInt(8, 4); // Admin 4
+            psUsuario.setInt(8, Sesion.getIdUsuarioActual());
             psUsuario.setTimestamp(9, new Timestamp(System.currentTimeMillis()));
             
             if (psUsuario.executeUpdate() > 0) {
@@ -51,7 +52,7 @@ public class EmpleadoDAO {
                     psEmpleado.setInt(2, 1); 
                     psEmpleado.setString(3, empleado.getEspecialidad());
                     psEmpleado.setDouble(4, empleado.getSueldo());
-                    psEmpleado.setInt(5, 4); // Admin 4
+                    psEmpleado.setInt(5, Sesion.getIdUsuarioActual());
                     psEmpleado.setTimestamp(6, new Timestamp(System.currentTimeMillis()));
                     
                     if (psEmpleado.executeUpdate() > 0) {
@@ -140,7 +141,7 @@ public class EmpleadoDAO {
             psUsuario.setString(3, usuario.getTelefono());
             psUsuario.setString(4, usuario.getEmail());
             psUsuario.setString(5, usuario.getPassword());
-            psUsuario.setInt(6, 4); 
+            psUsuario.setInt(6, Sesion.getIdUsuarioActual());
             psUsuario.setTimestamp(7, fechaActual);
             psUsuario.setInt(8, empleado.getIdUsuario());
             
@@ -149,7 +150,7 @@ public class EmpleadoDAO {
             psEmpleado = con.prepareStatement(sqlEmpleado);
             psEmpleado.setString(1, empleado.getEspecialidad());
             psEmpleado.setDouble(2, empleado.getSueldo());
-            psEmpleado.setInt(3, 4); 
+            psEmpleado.setInt(3, Sesion.getIdUsuarioActual());
             psEmpleado.setTimestamp(4, fechaActual);
             psEmpleado.setInt(5, empleado.getIdEmpleado());
             
@@ -172,9 +173,8 @@ public class EmpleadoDAO {
     }
 
     // --- 4. ELIMINAR LOGICO EMPLEADO ---
-    public boolean eliminarLogico(int idEmpleado, int idAdminEnSesion) {
-        String sqlBaja = "UPDATE empleados SET id_estado = 0, deleted_at = ?, id_user_update = ? WHERE id_empleado = ?";
-        // CORREGIDO: id_user_create sin "d" en logs
+    public boolean eliminarLogico(int idEmpleado) {
+        String sqlBaja = "UPDATE empleados SET id_estado = 3, deleted_at = ?, id_user_update = ? WHERE id_empleado = ?";
         String sqlLog = "INSERT INTO logs (id_usuario, tabla_afectada, accion, descripcion, fecha_log, id_user_create, date_create) VALUES (?, ?, ?, ?, ?, ?, ?)";
         
         Connection con = null;
@@ -186,13 +186,15 @@ public class EmpleadoDAO {
             con = Conexion.getConnection();
             con.setAutoCommit(false); 
             
+            // 1. Damos de baja al cliente
             Timestamp fechaActual = new Timestamp(System.currentTimeMillis());
             
             psBaja = con.prepareStatement(sqlBaja);
             psBaja.setTimestamp(1, fechaActual);
-            psBaja.setInt(2, 4); 
+            psBaja.setInt(2, Sesion.getIdUsuarioActual());
             psBaja.setInt(3, idEmpleado);
             
+            // 2. Si se dio de baja bien, insertamos el LOG
             if (psBaja.executeUpdate() > 0) {
                 psLog = con.prepareStatement(sqlLog);
                 psLog.setInt(1, 4);
@@ -200,7 +202,7 @@ public class EmpleadoDAO {
                 psLog.setString(3, "ELIMINAR");
                 psLog.setString(4, "Se dio de baja lógicamente al empleado ID: " + idEmpleado);
                 psLog.setTimestamp(5, fechaActual);
-                psLog.setInt(6, 4);
+                psLog.setInt(6, Sesion.getIdUsuarioActual());
                 psLog.setTimestamp(7, fechaActual);
                 
                 if (psLog.executeUpdate() > 0) {

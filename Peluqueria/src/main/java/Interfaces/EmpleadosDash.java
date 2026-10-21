@@ -19,26 +19,54 @@ public class EmpleadosDash extends javax.swing.JFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(EmpleadosDash.class.getName());
 
     public EmpleadosDash() {
+// --- 1. BARRERA DE SEGURIDAD (BLOQUEO TOTAL) ---
+        if (Entity.Sesion.getIdRolActual() == 2) { // 2 = Empleado
+            // Le mostramos un mensaje de error sin que llegue a ver la ventana
+            javax.swing.JOptionPane.showMessageDialog(null, 
+                "Acceso denegado. Este módulo es exclusivo para Administradores.", 
+                "Sin permisos", 
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+            
+            // Lo devolvemos al Panel de Control (Asegúrate de importar Interfaces.PanelDeControl si hace falta)
+            PanelDeControl panel = new PanelDeControl();
+            panel.setVisible(true);
+            
+            // Destruimos esta ventana de EmpleadosDash inmediatamente
+            this.dispose();
+            return;
+        }
+        
+        // --- 2. CARGA NORMAL (Solo llega hasta aquí si es Administrador) ---
         initComponents();
         this.setLocationRelativeTo(null); // Centra la ventana
         
-        NavegacionUtils.configurarMenuLateral(
-            this, DashboardPanel, GestinTurnoPanel, ClientesPanel, 
-            EmpleadosPanel, ServiciosPanel, InventarioPanel, 
-            FacturacionPanel, ReportePanel, ConfiguracionPanel
+        // Colocamos el nombre del Administrador en la esquina
+        jLabel5.setText(Entity.Sesion.getNombreCompletoActual());
+        jLabel4.setText("Administrador");
+        
+        // Configuramos el menú lateral
+        NavegacionUtils.configurarMenuLateral(this, 
+            DashboardPanel, // Panel
+            GestinTurnoPanel, // Gestión de turnos
+            ClientesPanel, // Clientes
+            EmpleadosPanel, // Empleados
+            ServiciosPanel, // Servicios
+            InventarioPanel, // Inventario
+            FacturacionPanel, // Facturación
+            ReportePanel, //Reportes
+            PerfilPanel1 //Perfil
         );
         
         cargarListaEstados();
         cargarTablaEmpleados();
         
         timerActualizacion = new javax.swing.Timer(10000, new java.awt.event.ActionListener() {
-        @Override
-        public void actionPerformed(java.awt.event.ActionEvent e) {
-            cargarTablaEmpleados();
-        }
-    });
-    timerActualizacion.start(); // Arranca el contador
-
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                cargarTablaEmpleados();
+            }
+        });
+        timerActualizacion.start(); // Arranca el contador
     }
 
     // --- MÉTODOS DE LÓGICA ---
@@ -87,7 +115,18 @@ public class EmpleadosDash extends javax.swing.JFrame {
             Object[] fila = new Object[6];
             fila[0] = e.getIdEmpleado();
             fila[1] = e.getNombre() + " " + e.getApellido();
-            fila[2] = (e.getIdEstado() == 1) ? "Activo" : "Inactivo"; 
+            
+            // --- CORRECCIÓN AQUÍ: Leemos los 3 estados correctamente ---
+            if (e.getIdEstado() == 1) {
+                fila[2] = "Activo";
+            } else if (e.getIdEstado() == 2) {
+                fila[2] = "Inactivo";
+            } else if (e.getIdEstado() == 3) {
+                fila[2] = "Eliminado";
+            } else {
+                fila[2] = "Desconocido";
+            }
+            
             fila[3] = e.getEspecialidad();
             fila[4] = "$" + e.getSueldo(); 
             
@@ -127,8 +166,8 @@ public class EmpleadosDash extends javax.swing.JFrame {
         InventarioPanel = new javax.swing.JToggleButton();
         GestinTurnoPanel = new javax.swing.JToggleButton();
         FacturacionPanel = new javax.swing.JToggleButton();
-        ConfiguracionPanel = new javax.swing.JToggleButton();
         ReportePanel = new javax.swing.JToggleButton();
+        PerfilPanel1 = new javax.swing.JToggleButton();
         jPanel7 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -247,15 +286,16 @@ public class EmpleadosDash extends javax.swing.JFrame {
         FacturacionPanel.setForeground(new java.awt.Color(255, 153, 0));
         FacturacionPanel.setText("Facturación");
 
-        ConfiguracionPanel.setBackground(new java.awt.Color(51, 51, 51));
-        ConfiguracionPanel.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
-        ConfiguracionPanel.setForeground(new java.awt.Color(255, 153, 0));
-        ConfiguracionPanel.setText("Configuración");
-
         ReportePanel.setBackground(new java.awt.Color(51, 51, 51));
         ReportePanel.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
         ReportePanel.setForeground(new java.awt.Color(255, 153, 0));
         ReportePanel.setText("Reportes");
+
+        PerfilPanel1.setBackground(new java.awt.Color(51, 51, 51));
+        PerfilPanel1.setFont(new java.awt.Font("sansserif", 0, 14)); // NOI18N
+        PerfilPanel1.setForeground(new java.awt.Color(255, 153, 0));
+        PerfilPanel1.setText("Perfil");
+        PerfilPanel1.addActionListener(this::PerfilPanel1ActionPerformed);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -267,19 +307,19 @@ public class EmpleadosDash extends javax.swing.JFrame {
                     .addComponent(DashboardPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(GestinTurnoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(ClientesPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(EmpleadosPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ServiciosPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(InventarioPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(FacturacionPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ReportePanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ConfiguracionPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(ReportePanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(EmpleadosPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ServiciosPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(PerfilPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -304,7 +344,7 @@ public class EmpleadosDash extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ReportePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(ConfiguracionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(PerfilPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -506,9 +546,10 @@ public class EmpleadosDash extends javax.swing.JFrame {
 
         if (confirmacion == JOptionPane.YES_OPTION) {
             EmpleadoDAO dao = new EmpleadoDAO();
-            int idAdminSimulado = 4; // Usuario en sesión
             
-            boolean exito = dao.eliminarLogico(idEmpleado, idAdminSimulado);
+            // --- CORRECCIÓN AQUÍ: Quitamos el idAdminSimulado = 4 ---
+            // Ahora el DAO solo pide el idEmpleado y él mismo saca quién está en la Sesión
+            boolean exito = dao.eliminarLogico(idEmpleado);
             
             if (exito) {
                 JOptionPane.showMessageDialog(this, "Empleado eliminado con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
@@ -541,6 +582,10 @@ public class EmpleadosDash extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_ListaEstadosValueChanged
 
+    private void PerfilPanel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PerfilPanel1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_PerfilPanel1ActionPerformed
+
 
     public static void main(String args[]) {
     try {
@@ -560,7 +605,6 @@ public class EmpleadosDash extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField CargarNombredelCliente;
     private javax.swing.JToggleButton ClientesPanel;
-    private javax.swing.JToggleButton ConfiguracionPanel;
     private javax.swing.JButton CrearCliente;
     private javax.swing.JToggleButton DashboardPanel;
     private javax.swing.JButton EliminarCliente;
@@ -569,6 +613,7 @@ public class EmpleadosDash extends javax.swing.JFrame {
     private javax.swing.JToggleButton GestinTurnoPanel;
     private javax.swing.JToggleButton InventarioPanel;
     private javax.swing.JList<Entity.Estado> ListaEstados;
+    private javax.swing.JToggleButton PerfilPanel1;
     private javax.swing.JToggleButton ReportePanel;
     private javax.swing.JToggleButton ServiciosPanel;
     private javax.swing.JLabel jLabel3;
