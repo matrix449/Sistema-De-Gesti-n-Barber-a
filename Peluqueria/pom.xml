@@ -36,6 +36,11 @@
             <artifactId>protobuf-java</artifactId>
             <version>4.29.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.netbeans.external</groupId>
+            <artifactId>AbsoluteLayout</artifactId>
+            <version>RELEASE290</version>
+        </dependency>
     </dependencies>
 
     <properties>
@@ -43,4 +48,15 @@
         <maven.compiler.release>25</maven.compiler.release>
         <exec.mainClass>com.mycompany.peluqueria.Peluqueria</exec.mainClass>
     </properties>
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.png</include>
+                    <include>**/*.jpg</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
 </project>
