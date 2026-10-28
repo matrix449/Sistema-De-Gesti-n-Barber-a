@@ -19,7 +19,7 @@ public class Estado {
     public String getNombreEstado() { return nombreEstado; }
     public String getModulo() { return modulo; }
 
-    // --- SETTERS (¡Estos son los que te faltaban para guardar datos!) ---
+    // --- SETTERS ---
     public void setIdEstado(int idEstado) {
         this.idEstado = idEstado;
     }
@@ -32,9 +32,8 @@ public class Estado {
         this.modulo = modulo;
     }
 
-    // Este método es CLAVE: es lo que se va a mostrar visualmente en la JList
-    @Override
+@Override
     public String toString() {
-        return nombreEstado;
+        return this.nombreEstado;
     }
 }

@@ -12,7 +12,8 @@ public class CientesDash extends javax.swing.JFrame {
     
 public CientesDash() {
         initComponents();
-        this.setLocationRelativeTo(null); // Centra la ventana
+
+        this.setLocationRelativeTo(null);
         
         
         if (Entity.Sesion.getIdRolActual() == 2) {
@@ -31,7 +32,7 @@ public CientesDash() {
             PerfilPanel1 //Perfil
         );
         
-        cargarListaEstados(); // <--- ¡TE FALTABA ESTA LÍNEA!
+        cargarListaEstados();
         cargarTablaClientes();
     }
 
@@ -65,12 +66,11 @@ public CientesDash() {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        ListaEstado = new javax.swing.JList<>();
         jPanel10 = new javax.swing.JPanel();
         txtBuscarCliente = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         EliminarCliente = new javax.swing.JButton();
+        ListaEstado2 = new javax.swing.JComboBox<>();
 
         jPanel9.setBackground(new java.awt.Color(0, 0, 0));
         jPanel9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 153, 0), 2));
@@ -104,6 +104,7 @@ public CientesDash() {
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 153, 0), 3));
         jPanel1.setForeground(new java.awt.Color(255, 153, 51));
         jPanel1.setPreferredSize(new java.awt.Dimension(1000, 720));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(0, 0, 0));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 153, 0), 2));
@@ -147,6 +148,8 @@ public CientesDash() {
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(257, 9, 884, -1));
 
         jPanel4.setBackground(new java.awt.Color(0, 0, 0));
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 153, 0), 2));
@@ -274,6 +277,8 @@ public CientesDash() {
                 .addContainerGap(174, Short.MAX_VALUE))
         );
 
+        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(9, 9, 242, -1));
+
         jPanel7.setBackground(new java.awt.Color(0, 0, 0));
         jPanel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 153, 0), 2));
         jPanel7.setForeground(new java.awt.Color(255, 153, 0));
@@ -325,10 +330,6 @@ public CientesDash() {
         jButton1.setText("Nuevo Cliente");
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
-        ListaEstado.setForeground(new java.awt.Color(255, 153, 0));
-        ListaEstado.addListSelectionListener(this::ListaEstadoValueChanged);
-        jScrollPane2.setViewportView(ListaEstado);
-
         jPanel10.setBackground(new java.awt.Color(0, 0, 0));
         jPanel10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 153, 0), 2));
         jPanel10.setForeground(new java.awt.Color(255, 153, 0));
@@ -362,6 +363,8 @@ public CientesDash() {
         EliminarCliente.setText("Borrar Cliente");
         EliminarCliente.addActionListener(this::EliminarClienteActionPerformed);
 
+        ListaEstado2.addActionListener(this::ListaEstado2ActionPerformed);
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
@@ -372,7 +375,7 @@ public CientesDash() {
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ListaEstado2, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(EliminarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -388,42 +391,17 @@ public CientesDash() {
                         .addContainerGap()
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(EliminarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(EliminarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ListaEstado2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGap(9, 9, 9)
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
+        jPanel1.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(257, 72, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -501,38 +479,38 @@ public CientesDash() {
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void txtBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarClienteActionPerformed
-        cargarTablaClientes();;
+        cargarTablaClientes();
     }//GEN-LAST:event_txtBuscarClienteActionPerformed
-
-    private void ListaEstadoValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_ListaEstadoValueChanged
-        if (!evt.getValueIsAdjusting()) {
-            cargarTablaClientes();
-        }
-    }//GEN-LAST:event_ListaEstadoValueChanged
 
     private void PerfilPanel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PerfilPanel1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_PerfilPanel1ActionPerformed
 
+    private void ListaEstado2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListaEstado2ActionPerformed
+        cargarTablaClientes();
+    }//GEN-LAST:event_ListaEstado2ActionPerformed
+
     private void cargarListaEstados() {
-        Dao.EstadoDAO estadoDao = new Dao.EstadoDAO();
-        // Le pasamos "Usuario" para que solo traiga Activo, Inactivo, Eliminado[cite: 10]
+    Dao.EstadoDAO estadoDao = new Dao.EstadoDAO();
         java.util.List<Entity.Estado> estados = estadoDao.listarPorModulo("Usuario");
-        
-        javax.swing.DefaultListModel<Entity.Estado> modelo = new javax.swing.DefaultListModel<>();
+        javax.swing.DefaultComboBoxModel<Entity.Estado> modelo = new javax.swing.DefaultComboBoxModel<>();
+
+
         for (Entity.Estado est : estados) {
             modelo.addElement(est);
         }
-        ListaEstado.setModel(modelo);
+        
+        ListaEstado2.setModel(modelo);
     }
 
     private void cargarTablaClientes() {
-        // Obtener el texto de la barra de búsqueda (asumiendo que se llama txtBuscarCliente)
+        // Obtener el texto de la barra de búsqueda
         String busqueda = txtBuscarCliente.getText(); 
         
-        // Obtener el estado seleccionado en la lista
         int idEstadoFiltro = -1; // Por defecto "Todos"
-        Entity.Estado estadoSeleccionado = ListaEstado.getSelectedValue();
+        
+        // LEER DESDE EL COMBOBOX (ListaEstado2)
+        Entity.Estado estadoSeleccionado = (Entity.Estado) ListaEstado2.getSelectedItem();
         if (estadoSeleccionado != null) {
             idEstadoFiltro = estadoSeleccionado.getIdEstado();
         }
@@ -552,7 +530,7 @@ public CientesDash() {
             fila[0] = c.getIdCliente();
             fila[1] = c.getNombre() + " " + c.getApellido();
             
-            // Asignar el nombre del estado basándonos en el ID[cite: 10]
+            // Asignar el nombre del estado basándonos en el ID
             if (c.getIdEstado() == 1) fila[2] = "Activo";
             else if (c.getIdEstado() == 2) fila[2] = "Inactivo";
             else if (c.getIdEstado() == 3) fila[2] = "Eliminado";
@@ -564,7 +542,15 @@ public CientesDash() {
             
             modelo.addRow(fila);
         }
+        
+
         jTable1.setModel(modelo);
+        
+
+        jTable1.getColumnModel().getColumn(0).setMinWidth(0);
+        jTable1.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTable1.getColumnModel().getColumn(0).setWidth(0);
+        jTable1.getColumnModel().getColumn(0).setPreferredWidth(0);
     }
     
     
@@ -598,16 +584,12 @@ public CientesDash() {
     private javax.swing.JToggleButton FacturacionPanel;
     private javax.swing.JToggleButton GestinTurnoPanel;
     private javax.swing.JToggleButton InventarioPanel;
-    private javax.swing.JList<Entity.Estado> ListaEstado;
+    private javax.swing.JComboBox<Entity.Estado> ListaEstado2;
     private javax.swing.JToggleButton PerfilPanel1;
     private javax.swing.JToggleButton ReportePanel;
     private javax.swing.JToggleButton ServiciosPanel;
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel27;
-    private javax.swing.JLabel jLabel28;
-    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -615,18 +597,13 @@ public CientesDash() {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField txtBuscarCliente;

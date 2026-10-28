@@ -20,8 +20,8 @@ public class EmpleadosDash extends javax.swing.JFrame {
 
     public EmpleadosDash() {
 // --- 1. BARRERA DE SEGURIDAD (BLOQUEO TOTAL) ---
-        if (Entity.Sesion.getIdRolActual() == 2) { // 2 = Empleado
-            // Le mostramos un mensaje de error sin que llegue a ver la ventana
+        if (Entity.Sesion.getIdRolActual() == 2) {
+            // Mostramos un mensaje de error sin que llegue a ver la ventana
             javax.swing.JOptionPane.showMessageDialog(null, 
                 "Acceso denegado. Este módulo es exclusivo para Administradores.", 
                 "Sin permisos", 
@@ -38,6 +38,7 @@ public class EmpleadosDash extends javax.swing.JFrame {
         
         // --- 2. CARGA NORMAL (Solo llega hasta aquí si es Administrador) ---
         initComponents();
+
         this.setLocationRelativeTo(null); // Centra la ventana
         
         // Colocamos el nombre del Administrador en la esquina
@@ -72,30 +73,31 @@ public class EmpleadosDash extends javax.swing.JFrame {
     // --- MÉTODOS DE LÓGICA ---
 
     private void cargarListaEstados() {
-        EstadoDAO estadoDao = new EstadoDAO();
+    EstadoDAO estadoDao = new EstadoDAO();
         List<Estado> estados = estadoDao.listarPorModulo("Usuario");
         
-        DefaultListModel<Estado> modeloLista = new DefaultListModel<>();
+        javax.swing.DefaultComboBoxModel<Estado> modeloCombo = new javax.swing.DefaultComboBoxModel<>();
         
         // Opción "Todos"
         Estado estadoTodos = new Estado();
         estadoTodos.setIdEstado(-1);
         estadoTodos.setNombreEstado("Todos");
-        modeloLista.addElement(estadoTodos);
+        modeloCombo.addElement(estadoTodos);
         
         for (Estado est : estados) {
-            modeloLista.addElement(est);
+            modeloCombo.addElement(est);
         }
         
-        ListaEstados.setModel(modeloLista);
-        ListaEstados.setSelectedIndex(0); 
+        ListaEstados2.setModel(modeloCombo);
+        ListaEstados2.setSelectedIndex(0);
     }
 
     private void cargarTablaEmpleados() {
-        String textoBusqueda = CargarNombredelCliente.getText();
+    String textoBusqueda = CargarNombredelCliente.getText();
         
-        Estado estadoSeleccionado = ListaEstados.getSelectedValue();
         int idEstadoFiltro = -1;
+        // LEER DESDE EL COMBOBOX
+        Estado estadoSeleccionado = (Estado) ListaEstados2.getSelectedItem();
         if (estadoSeleccionado != null) {
             idEstadoFiltro = estadoSeleccionado.getIdEstado();
         }
@@ -137,7 +139,14 @@ public class EmpleadosDash extends javax.swing.JFrame {
             }
             modelo.addRow(fila);
         }
+
         jTable1.setModel(modelo);
+        
+
+        jTable1.getColumnModel().getColumn(0).setMinWidth(0);
+        jTable1.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTable1.getColumnModel().getColumn(0).setWidth(0);
+        jTable1.getColumnModel().getColumn(0).setPreferredWidth(0);
     }
 
 
@@ -174,19 +183,20 @@ public class EmpleadosDash extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         CrearCliente = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        ListaEstados = new javax.swing.JList<>();
         jPanel10 = new javax.swing.JPanel();
         CargarNombredelCliente = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         EliminarCliente = new javax.swing.JButton();
+        ListaEstados2 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 0));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 153, 0), 3));
         jPanel1.setForeground(new java.awt.Color(255, 153, 51));
+        jPanel1.setMaximumSize(new java.awt.Dimension(32767, 32767));
         jPanel1.setPreferredSize(new java.awt.Dimension(1000, 720));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(0, 0, 0));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 153, 0), 2));
@@ -230,6 +240,8 @@ public class EmpleadosDash extends javax.swing.JFrame {
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(257, 9, 884, -1));
 
         jPanel4.setBackground(new java.awt.Color(0, 0, 0));
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 153, 0), 2));
@@ -357,6 +369,8 @@ public class EmpleadosDash extends javax.swing.JFrame {
                 .addContainerGap(174, Short.MAX_VALUE))
         );
 
+        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(9, 9, 242, -1));
+
         jPanel7.setBackground(new java.awt.Color(0, 0, 0));
         jPanel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 153, 0), 2));
         jPanel7.setForeground(new java.awt.Color(255, 153, 0));
@@ -398,7 +412,7 @@ public class EmpleadosDash extends javax.swing.JFrame {
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 582, Short.MAX_VALUE)
+                .addComponent(jScrollPane1)
                 .addContainerGap())
         );
 
@@ -409,10 +423,6 @@ public class EmpleadosDash extends javax.swing.JFrame {
         CrearCliente.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         CrearCliente.setBorderPainted(false);
         CrearCliente.addActionListener(this::CrearClienteActionPerformed);
-
-        ListaEstados.setForeground(new java.awt.Color(255, 153, 0));
-        ListaEstados.addListSelectionListener(this::ListaEstadosValueChanged);
-        jScrollPane2.setViewportView(ListaEstados);
 
         jPanel10.setBackground(new java.awt.Color(0, 0, 0));
         jPanel10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 153, 0), 2));
@@ -453,6 +463,8 @@ public class EmpleadosDash extends javax.swing.JFrame {
         EliminarCliente.setBorderPainted(false);
         EliminarCliente.addActionListener(this::EliminarClienteActionPerformed);
 
+        ListaEstados2.addActionListener(this::ListaEstados2ActionPerformed);
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
@@ -462,9 +474,9 @@ public class EmpleadosDash extends javax.swing.JFrame {
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 164, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(ListaEstados2, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 178, Short.MAX_VALUE)
                         .addComponent(EliminarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(CrearCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -479,42 +491,17 @@ public class EmpleadosDash extends javax.swing.JFrame {
                         .addContainerGap()
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(CrearCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(EliminarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(EliminarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ListaEstados2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGap(9, 9, 9)
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(18, 18, 18)
+                        .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
+        jPanel1.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(257, 72, -1, 669));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -585,15 +572,13 @@ public class EmpleadosDash extends javax.swing.JFrame {
         cargarTablaEmpleados();
     }//GEN-LAST:event_CargarNombredelClienteKeyReleased
 
-    private void ListaEstadosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_ListaEstadosValueChanged
-        if (!evt.getValueIsAdjusting()) {
-            cargarTablaEmpleados(); // Actualiza la tabla con el estado seleccionado
-        }
-    }//GEN-LAST:event_ListaEstadosValueChanged
-
     private void PerfilPanel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PerfilPanel1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_PerfilPanel1ActionPerformed
+
+    private void ListaEstados2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListaEstados2ActionPerformed
+        cargarTablaEmpleados();
+    }//GEN-LAST:event_ListaEstados2ActionPerformed
 
 
     public static void main(String args[]) {
@@ -621,7 +606,7 @@ public class EmpleadosDash extends javax.swing.JFrame {
     private javax.swing.JToggleButton FacturacionPanel;
     private javax.swing.JToggleButton GestinTurnoPanel;
     private javax.swing.JToggleButton InventarioPanel;
-    private javax.swing.JList<Entity.Estado> ListaEstados;
+    private javax.swing.JComboBox<Entity.Estado> ListaEstados2;
     private javax.swing.JToggleButton PerfilPanel1;
     private javax.swing.JToggleButton ReportePanel;
     private javax.swing.JToggleButton ServiciosPanel;
@@ -638,7 +623,6 @@ public class EmpleadosDash extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }
