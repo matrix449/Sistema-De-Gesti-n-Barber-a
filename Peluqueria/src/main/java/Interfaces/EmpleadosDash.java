@@ -577,7 +577,7 @@ public class EmpleadosDash extends javax.swing.JFrame {
     }//GEN-LAST:event_PerfilPanel1ActionPerformed
 
     private void ListaEstados2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ListaEstados2ActionPerformed
-        cargarTablaEmpleados();
+        cargarTablaEmpleados( );
     }//GEN-LAST:event_ListaEstados2ActionPerformed
 
 

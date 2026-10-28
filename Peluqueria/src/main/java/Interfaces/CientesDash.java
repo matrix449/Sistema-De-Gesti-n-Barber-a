@@ -500,7 +500,7 @@ public CientesDash() {
             modelo.addElement(est);
         }
         
-        ListaEstado2.setModel(modelo);
+        ListaEstado2.setModel(modelo );
     }
 
     private void cargarTablaClientes() {

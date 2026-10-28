@@ -34,6 +34,7 @@ public class Estado {
 
 @Override
     public String toString() {
-        return this.nombreEstado;
+        return this.nombreEstado
+        ;
     }
 }
