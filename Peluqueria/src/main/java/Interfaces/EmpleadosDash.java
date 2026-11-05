@@ -61,10 +61,18 @@ public class EmpleadosDash extends javax.swing.JFrame {
         cargarListaEstados();
         cargarTablaEmpleados();
         
-        timerActualizacion = new javax.swing.Timer(10000, new java.awt.event.ActionListener() {
+        timerActualizacion = new javax.swing.Timer(2000, new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
+                // Guardamos la fila seleccionada antes de actualizar
+                int filaSeleccionada = jTable1.getSelectedRow();
+                
                 cargarTablaEmpleados();
+                
+                // Restauramos la selección si es válida
+                if (filaSeleccionada != -1 && filaSeleccionada < jTable1.getRowCount()) {
+                    jTable1.setRowSelectionInterval(filaSeleccionada, filaSeleccionada);
+                }
             }
         });
         timerActualizacion.start(); // Arranca el contador
@@ -73,7 +81,7 @@ public class EmpleadosDash extends javax.swing.JFrame {
     // --- MÉTODOS DE LÓGICA ---
 
     private void cargarListaEstados() {
-    EstadoDAO estadoDao = new EstadoDAO();
+        EstadoDAO estadoDao = new EstadoDAO();
         List<Estado> estados = estadoDao.listarPorModulo("Usuario");
         
         javax.swing.DefaultComboBoxModel<Estado> modeloCombo = new javax.swing.DefaultComboBoxModel<>();
@@ -93,7 +101,7 @@ public class EmpleadosDash extends javax.swing.JFrame {
     }
 
     private void cargarTablaEmpleados() {
-    String textoBusqueda = CargarNombredelCliente.getText();
+        String textoBusqueda = CargarNombredelCliente.getText();
         
         int idEstadoFiltro = -1;
         // LEER DESDE EL COMBOBOX
@@ -118,7 +126,7 @@ public class EmpleadosDash extends javax.swing.JFrame {
             fila[0] = e.getIdEmpleado();
             fila[1] = e.getNombre() + " " + e.getApellido();
             
-            // --- CORRECCIÓN AQUÍ: Leemos los 3 estados correctamente ---
+            // Leemos los 3 estados correctamente
             if (e.getIdEstado() == 1) {
                 fila[2] = "Activo";
             } else if (e.getIdEstado() == 2) {
@@ -142,11 +150,10 @@ public class EmpleadosDash extends javax.swing.JFrame {
 
         jTable1.setModel(modelo);
         
-
         jTable1.getColumnModel().getColumn(0).setMinWidth(0);
         jTable1.getColumnModel().getColumn(0).setMaxWidth(0);
         jTable1.getColumnModel().getColumn(0).setWidth(0);
-        jTable1.getColumnModel().getColumn(0).setPreferredWidth(0);
+        jTable1.getColumnModel().getColumn(0).setPreferredWidth(0); 
     }
 
 

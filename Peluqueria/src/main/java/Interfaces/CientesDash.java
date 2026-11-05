@@ -9,10 +9,12 @@ public class CientesDash extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CientesDash.class.getName());
 
+    private javax.swing.Timer timerActualizacion;
     
 public CientesDash() {
         initComponents();
 
+        
         this.setLocationRelativeTo(null);
         
         
@@ -34,6 +36,24 @@ public CientesDash() {
         
         cargarListaEstados();
         cargarTablaClientes();
+        
+        timerActualizacion = new javax.swing.Timer(2000, new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                // Capturamos la fila seleccionada actual antes de recargar
+                int filaSeleccionada = jTable1.getSelectedRow();
+                
+                cargarTablaClientes();
+                
+                // Si había una fila seleccionada, intentamos mantener la selección
+                if (filaSeleccionada != -1 && filaSeleccionada < jTable1.getRowCount()) {
+                    jTable1.setRowSelectionInterval(filaSeleccionada, filaSeleccionada);
+                }
+            }
+        });
+        
+        // 3. Iniciamos el temporizador
+        timerActualizacion.start();
     }
 
 
@@ -543,14 +563,13 @@ public CientesDash() {
             modelo.addRow(fila);
         }
         
-
         jTable1.setModel(modelo);
         
-
         jTable1.getColumnModel().getColumn(0).setMinWidth(0);
         jTable1.getColumnModel().getColumn(0).setMaxWidth(0);
         jTable1.getColumnModel().getColumn(0).setWidth(0);
         jTable1.getColumnModel().getColumn(0).setPreferredWidth(0);
+        
     }
     
     
